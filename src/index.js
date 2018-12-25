@@ -9,3 +9,12 @@ export {
   VTr,
   SmartPagination
 }
+
+export default {
+  install (Vue) {
+    Vue.component('v-table', VTable)
+    Vue.component('v-th', VTh)
+    Vue.component('v-tr', VTr)
+    Vue.component('smart-pagination', SmartPagination)
+  }
+}
