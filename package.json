@@ -1,17 +1,19 @@
 {
-  "name": "v-simple-table",
-  "version": "0.1.0",
+  "name": "vue-smart-table",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "vue": "^2.5.17"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.6.3",
     "@vue/cli-plugin-babel": "^3.1.1",
     "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-plugin-unit-mocha": "^3.1.1",
@@ -19,11 +21,15 @@
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-eslint": "^10.0.1",
+    "bootstrap": "^4.2.1",
     "chai": "^4.1.2",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "lint-staged": "^7.2.2",
-    "vue-template-compiler": "^2.5.17"
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.17",
+    "vuepress": "^0.14.8"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
