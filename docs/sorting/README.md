@@ -125,20 +125,13 @@ export default {
 </script>
 ```
 
-
+<Sorting/>
 
 ## CSS icons
 By default we include three SVG icons to indicate the sorting state of a column. 
 But you can use CSS Styles to change the sort icons.
 
-There are 4 CSS classes for th elements with sorting enabled:
-
-* `vt-sort`: This class is always present, its purpose is to provide a constant CSS class for the columns with sorting.
-* `vt-sortable`: This class indicates the column can be sorted and it is present when the column is not currently sorted.
-* `vt-asc`: This class indicates the column is being sorted by an ascending order.
-* `vt-desc`: This class indicates the column is being sorted by a descending order.
-
-You also need to disable the default sort icons with the `hideSortIcons` property on the `v-table` component:
+The first thing you need to do is to disable the default sort icons with the `hideSortIcons` property on the `v-table` component:
 
 ```html
 <v-table
@@ -148,6 +141,13 @@ You also need to disable the default sort icons with the `hideSortIcons` propert
 ...
 </v-table>
 ```
+
+Then you will get 4 CSS classes for `th` elements with sorting enabled:
+
+* `vt-sort`: This class is always present, its purpose is to provide a constant CSS class for the columns with sorting.
+* `vt-sortable`: This class indicates the column can be sorted and it is present when the column is not currently sorted.
+* `vt-asc`: This class indicates the column is being sorted by an ascending order.
+* `vt-desc`: This class indicates the column is being sorted by a descending order.
 
 For this example we will use FontAwesome icons:
 
@@ -174,5 +174,3 @@ For this example we will use FontAwesome icons:
 ```
 
 <SortingFA/>
-
-<Sorting/>

@@ -9,11 +9,11 @@ Out of the box you will get filtering, column sorting, client side pagination an
 ## Installation
 To install simply run
 ```
-npm add vue-simple-table
+npm add @romero_soft/vue-simple-table
 ```
 or
 ```
-yarn add vue-simple-table
+yarn add @romero_soft/vue-simple-table
 ```
 
 Then in your `main.js`

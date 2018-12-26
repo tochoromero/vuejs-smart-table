@@ -38,6 +38,7 @@ export default {
 
 <style>
   @import "~@fortawesome/fontawesome-free/css/all.css";
+  @import "~bootstrap/dist/css/bootstrap.css";
 
   .vt-sort:before{
     font-family: "Font Awesome 5 Free";
@@ -48,7 +49,7 @@ export default {
   }
 
   .vt-sortable:before{
-    content: "\f0dc";
+    content: "\f338";
   }
 
   .vt-asc:before{
