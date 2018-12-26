@@ -9,6 +9,7 @@
 <script>
 import { doFilter, doSort, calculateTotalPages, doPaginate } from './table-utils'
 import store from './store'
+import Vue from 'vue'
 
 export default {
   name: 'SmartTable',
@@ -54,9 +55,19 @@ export default {
       type: Boolean
     }
   },
-  data: () => ({
-    state: store.state
-  }),
+  beforeCreate () {
+    this.store = new Vue(store)
+  },
+  provide () {
+    return {
+      store: this.store
+    }
+  },
+  data () {
+    return {
+      state: this.store._data
+    }
+  },
   computed: {
     needsPaginationReset () {
       return this.currentPage > this.totalPages

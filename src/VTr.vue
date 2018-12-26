@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import store from './store'
 
 export default {
   name: 'v-tr',
@@ -19,9 +18,12 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    state: store.state
-  }),
+  inject: ['store'],
+  data () {
+    return {
+      state: this.store._data
+    }
+  },
   mounted () {
     if (!this.state.customSelection) {
       this.$el.style.cursor = 'pointer'
@@ -52,9 +54,9 @@ export default {
       let source = event.target || event.srcElement
       if (source.tagName.toLowerCase() === 'td') {
         if (this.isSelected) {
-          store.deselectRow(this.row)
+          this.store.deselectRow(this.row)
         } else {
-          store.selectRow(this.row)
+          this.store.selectRow(this.row)
         }
       }
     }

@@ -1,5 +1,5 @@
 {
-  "name": "vue-smart-table",
+  "name": "@romero_soft/vue-smart-table",
   "version": "0.0.1",
   "private": false,
   "main": "src/index.js",

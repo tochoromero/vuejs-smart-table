@@ -1,5 +1,5 @@
 <template>
-  <th @click="sort" :class="[orderClasses[order + 1],'vt-sort']">
+  <th @click="sort" :class="sortClass">
     <template v-if="!state.hideSortIcons">
       <slot name="ascIcon" v-if="order === -1">
         <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -26,7 +26,6 @@
 
 <script>
 import { uuid } from './table-utils'
-import store from './store'
 
 export default {
   name: 'v-th',
@@ -45,12 +44,13 @@ export default {
       validator: value => ['asc', 'desc'].includes(value)
     }
   },
+  inject: ['store'],
   data () {
     return {
       id: uuid(),
       order: 0,
       orderClasses: ['vt-desc', 'vt-sortable', 'vt-asc'],
-      state: store.state
+      state: this.store._data
     }
   },
   computed: {
@@ -59,6 +59,9 @@ export default {
     },
     sortId () {
       return this.state.sortId
+    },
+    sortClass () {
+      return this.state.hideSortIcons ? [this.orderClasses[this.order + 1], 'vt-sort'] : []
     }
   },
   watch: {
@@ -75,7 +78,7 @@ export default {
 
     if (this.defaultSort) {
       this.order = this.defaultSort === 'desc' ? -1 : 1
-      store.setSort({
+      this.store.setSort({
         sortOrder: this.order,
         sortKey: this.sortKey,
         customSort: this.customSort,
@@ -87,7 +90,7 @@ export default {
     sort: function () {
       if (this.sortEnabled) {
         this.order = this.order === 0 || this.order === -1 ? this.order + 1 : -1
-        store.setSort({
+        this.store.setSort({
           sortOrder: this.order,
           sortKey: this.sortKey,
           customSort: this.customSort,
