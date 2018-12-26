@@ -18,7 +18,8 @@ yarn add vue-simple-table
 
 Then in your `main.js`
 ```js
-import SimpleTable from 'vue-simple-table'
+import SmartTable from 'vue-smart-table'
 
-Vue.use(SimpleTable)
+Vue.use(SmartTable)
 ```
+This will globally register four Components: `v-table`, `v-th`, `v-tr` and `smart-pagination`

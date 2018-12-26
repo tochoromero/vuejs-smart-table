@@ -9,11 +9,12 @@ module.exports = {
     }
   },
   themeConfig: {
-    sidebarDepth: 1,
+    sidebarDepth: 2,
     sidebar: [
       '/',
       'the-basics/',
-      'filtering/'
+      'filtering/',
+      'sorting/'
     ]
   }
 }

@@ -54,7 +54,7 @@ export default {
         :data="users"
         :filters="filters"
       >
-        <thead slot="header">
+        <thead slot="head">
         <th>Name</th>
         <th>Age</th>
         <th>Email</th>
@@ -137,7 +137,7 @@ export default {
         :data="users"
         :filters="filters"
       >
-        <thead slot="header">
+        <thead slot="head">
         <th>Name</th>
         <th>Age</th>
         <th>Email</th>

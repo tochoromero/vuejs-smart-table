@@ -1,6 +1,6 @@
 <template>
     <table>
-        <slot name="header"/>
+        <slot name="head"/>
         <slot name="body" :displayData="displayData"/>
 
     </table>

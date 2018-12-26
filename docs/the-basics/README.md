@@ -26,7 +26,7 @@ export default {
 ```html
 <template>
   <v-table :data="users">
-    <thead slot="header">
+    <thead slot="head">
         <th>Name</th>
         <th>Age</th>
         <th>Email</th>
@@ -62,11 +62,11 @@ Each entry in the array represents a row in the table.
 It is important to note the array will not be mutated by Smart Table, internally it will create a shallow copy of it to perform
 the operations.
 
-## header <Badge text="slot" type="success"/>
-The `header` slot is for the table `thead`, other than specifying the slot name with `slot="header"` there is nothing special about this.
+## head <Badge text="slot" type="success"/>
+The `head` slot is for the table `thead`, other than specifying the slot name with `slot="head"` there is nothing special about this.
 You just need to provide vanilla `th` elements for each of your columns.
 ```html
-<thead slot="header">
+<thead slot="head">
     <th>Name</th>
     <th>Age</th>
     ...
