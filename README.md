@@ -25,4 +25,4 @@ Vue.use(SmartTable)
 This will globally register four Components: `v-table`, `v-th`, `v-tr` and `smart-pagination`
 
 ## Documentation
-Please read the [documentation](https://cli.vuejs.org/config/) to learn how to use it.
+Please read the [documentation](https://tochoromero.github.io/vuejs-smart-table/) to learn how to use it.
