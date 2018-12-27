@@ -4,6 +4,7 @@
   "private": false,
   "main": "src/main.js",
   "author": "Hector Romero Granillo",
+  "repository": "https://github.com/tochoromero/vuejs-smart-table",
   "license": "MIT",
   "scripts": {
     "build": "vue-cli-service build --target lib --name smart-table src/main.js",
