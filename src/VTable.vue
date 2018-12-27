@@ -1,9 +1,9 @@
 <template>
-    <table>
-        <slot name="head"/>
-        <slot name="body" :displayData="displayData"/>
+  <table>
+    <slot name="head"/>
+    <slot name="body" :displayData="displayData"/>
 
-    </table>
+  </table>
 </template>
 
 <script>
@@ -24,8 +24,7 @@ export default {
     },
     currentPage: {
       required: false,
-      type: Number,
-      default: 1
+      type: Number
     },
     pageSize: {
       required: false,
@@ -83,6 +82,9 @@ export default {
 
       return doFilter(this.data, this.filters)
     },
+    totalItems () {
+      return this.filteredData.length
+    },
     sortedData () {
       if ((this.state.sortKey || this.state.customSort) && this.state.sortOrder !== 0) {
         return doSort(this.filteredData, this.state.sortKey, this.state.customSort, this.state.sortOrder)
@@ -91,7 +93,9 @@ export default {
       return this.filteredData
     },
     totalPages () {
-      return calculateTotalPages(this.filteredData.length, this.pageSize)
+      if (!this.pageSize) return 0
+
+      return calculateTotalPages(this.totalItems, this.pageSize)
     },
     displayData () {
       if (this.pageSize) {
@@ -140,6 +144,12 @@ export default {
     totalPages: {
       handler (totalPages) {
         this.$emit('totalPagesChanged', totalPages)
+      },
+      immediate: true
+    },
+    totalItems: {
+      handler (totalItems) {
+        this.$emit('totalItemsChanged', totalItems)
       },
       immediate: true
     },

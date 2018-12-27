@@ -1,5 +1,5 @@
 <template replaceable part="pagination">
-  <nav v-show="!(hideSinglePage && totalPages === 1)">
+  <nav v-show="!(hideSinglePage && totalPages === 1)" class="smart-pagination">
     <ul class="pagination">
       <li :class="{'disabled': currentPage === 1}" v-if="boundaryLinks" class="page-item">
         <a href="javascript:void(0)" aria-label="Previous" @click="firstPage" class="page-link">
@@ -61,32 +61,39 @@ export default {
       required: true,
       type: Number
     },
-    hideSinglePage: { default: true },
-    pageSize: {
-      required: true,
+    hideSinglePage: {
+      required: false,
+      type: Boolean,
+      default: true
+    },
+    maxPageLinks: {
+      required: false,
       type: Number
     },
-    boundaryLinks: { default: false },
+    boundaryLinks: {
+      required: false,
+      type: Boolean,
+      default: false
+    },
     firstText: {
       required: false,
       type: String,
       default: 'First'
     },
-    lastText: { default: 'Last' },
-    directionLinks: { default: true }
-  },
-  created () {
-    this.paginationUnwatch = this.$watch('pagination', this.calculatePages, { deep: true })
-    this.calculatePages()
-  },
-  beforeDestroy () {
-    if (this.paginationUnwatch) {
-      this.paginationUnwatch()
+    lastText: {
+      required: false,
+      type: String,
+      default: 'Last'
+    },
+    directionLinks: {
+      required: false,
+      type: Boolean,
+      default: true
     }
   },
   computed: {
     displayPages () {
-      if (isNaN(this.pageSize) || this.pageSize <= 0) {
+      if (isNaN(this.maxPageLinks) || this.maxPageLinks <= 0) {
         return this.displayAllPages()
       } else {
         return this.limitVisiblePages()
@@ -94,9 +101,6 @@ export default {
     }
   },
   methods: {
-    calculatePages () {
-
-    },
     displayAllPages () {
       const displayPages = []
 
@@ -111,12 +115,12 @@ export default {
     limitVisiblePages () {
       const displayPages = []
 
-      const totalTiers = Math.ceil(this.totalPages / this.pageSize)
+      const totalTiers = Math.ceil(this.totalPages / this.maxPageLinks)
 
-      const activeTier = Math.ceil(this.currentPage / this.pageSize)
+      const activeTier = Math.ceil(this.currentPage / this.maxPageLinks)
 
-      const start = ((activeTier - 1) * this.pageSize) + 1
-      const end = start + this.pageSize
+      const start = ((activeTier - 1) * this.maxPageLinks) + 1
+      const end = start + this.maxPageLinks
 
       if (activeTier > 1) {
         displayPages.push({
