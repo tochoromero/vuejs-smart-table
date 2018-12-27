@@ -50,19 +50,19 @@ export default {
 
 <TheBasics/>
 
-## v-table <Badge text="component" type="success"/>
+## Table <Badge text="Component" type="success"/> <Badge text="v-table"/>
 
 The `v-table` component is the main element of Smart Table, here you will provide most of the configuration and listen for events. 
 But for now we will just focus on the `data` attribute.
 
-### data <Badge text="property: Array" type="success"/>
+### Data <Badge text="Property" type="success"/> <Badge text="data: Array"/>
 Each `v-table` requires a `data` property, it must be an `array` even if it is initially empty.
 Each entry in the array represents a row in the table.
 
 It is important to note the array will not be mutated by Smart Table, internally it will create a shallow copy of it to perform
 the operations.
 
-## head <Badge text="slot" type="success"/>
+## Head <Badge text="Slot" type="success"/> <Badge text="head"/>
 The `head` slot is for the table `thead`, other than specifying the slot name with `slot="head"` there is nothing special about this.
 You just need to provide vanilla `th` elements for each of your columns.
 ```html
@@ -73,10 +73,10 @@ You just need to provide vanilla `th` elements for each of your columns.
 </thead>
 ```
 
-## body <Badge text="scoped slot" type="success"/>
+## Body <Badge text="Scoped Slot" type="success"/> <Badge text="body"/>
 The `body` slot is for the table `tbody`. This is a scoped slot which provides a `displayData` property.
 
-### displayData <Badge text="Array" type="success"/>
+### Display Data <Badge text="Slot Scope"/> <Badge text="displayData: array" type="success"/>
 The `display-data` property provided by the `body` scoped slot is a shallow copy of the `data` array provided to the `v-table` component.
 
 This array has all the plugins applied to it, for example, if filtering is enabled, this array will only contain the rows that pass the filters.

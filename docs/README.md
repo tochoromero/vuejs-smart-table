@@ -9,16 +9,16 @@ Out of the box you will get filtering, column sorting, client side pagination an
 ## Installation
 To install simply run
 ```
-npm add @romero_soft/vue-simple-table
+npm add vuejs-smart-table
 ```
 or
 ```
-yarn add @romero_soft/vue-simple-table
+yarn add vuejs-smart-table
 ```
 
 Then in your `main.js`
 ```js
-import SmartTable from 'vue-smart-table'
+import SmartTable from 'vuejs-smart-table'
 
 Vue.use(SmartTable)
 ```

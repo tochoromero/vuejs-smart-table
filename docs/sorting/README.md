@@ -3,11 +3,11 @@
 To enable column sorting, instead of using vanilla `th` elements we will use `v-th` Components for the columns
 that will allow sorting.
 
-## v-th <Badge text="Component" type="success"/>
+## Table Header <Badge text="Component"/> <Badge text="v-th"/>
 The `v-th` component renders to a regular `th` element but it allows you to sort the table, it has three properties:
-`key`, `customSort` and `defaultSort`.
+`sortKey`, `customSort` and `defaultSort`.
 
-### sortKey <Badge text="property: String | Function" type="success"/>
+### Sort Key <Badge text="Propery"/> <Badge text="sortKey: String | Function"/>
 The `sortKey` property is used to get the Row value we will sort by it can either be a `String` or a `Function`.
 
 #### String
@@ -40,7 +40,7 @@ Once we have used the `key` property to get the column values, we will compare t
 If the values are number we will just compare them by subtraction.
 Otherwise we will call `toString()` on them and compare them with `localCompare`.
 
-### customSort <Badge text="property: Function" type="success"/>
+### Custom Sort <Badge text="Property"/> <Badge text="customSort: Function"/>
 In some cases you need more control over sorting, 
 for instance if you have a complex object or your sorting depends in two or more values. 
 For those instances instead of providing a `key` property you can use the `custom` property to provide a sorting function.
@@ -67,7 +67,7 @@ methods: {
 }
 ```
 
-### defaultSort <Badge text="property: String" type="success"/>
+### Default Sort <Badge text="Property"/> <Badge text="defaultSort: String"/>
 You should provide this for the one column you want the table to be sorted by default. 
 The possible values are: `asc` for ascending ordering and `desc` for descending order.
 

@@ -3,7 +3,7 @@ Smart Table is only on charge of the actual row filtering based on the provided 
 The visual aspect of it are in your control, allowing you to use any UI Elements to interact while it frees you
 from the actual filtering computation.
 
-## filters <Badge text="property: Object" type="success"/>
+## Filters <Badge text="Property"/> <Badge text="filters: Object"/>
 To enable filtering you need to provide the `filters` property on the `v-table` component.
 
 The `filters` configuration object has the following form:
