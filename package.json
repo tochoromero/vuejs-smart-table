@@ -2,11 +2,11 @@
   "name": "vuejs-smart-table",
   "version": "0.0.1",
   "private": false,
-  "main": "src/index.js",
+  "main": "src/main.js",
   "author": "Hector Romero Granillo",
   "license": "MIT",
   "scripts": {
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name smart-table src/main.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "docs:dev": "vuepress dev docs",

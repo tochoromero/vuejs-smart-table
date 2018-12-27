@@ -9,7 +9,7 @@ export {
   VTr,
   SmartPagination
 }
-
+/**/
 export default {
   install (Vue) {
     Vue.component('v-table', VTable)
