@@ -1,34 +1,28 @@
-# v-simple-table
+# VueJs Smart Table 
 
-## Project setup
-```
-yarn install
-```
+Vue Smart Table was created out of the need for a simple highly customizable data table plugin 
+that could take advantage of Vue's slots. It has no dependencies but Vue and Vuex and because it 
+renders as a standard HTML table it is compatible with CSS Frameworks such as Bootstrap and Foundation.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+Out of the box you will get filtering, column sorting, client side pagination and row selection.
 
-### Compiles and minifies for production
+## Installation
+To install simply run
 ```
-yarn run build
+npm add vuejs-smart-table
 ```
-
-### Run your tests
+or
 ```
-yarn run test
+yarn add vuejs-smart-table
 ```
 
-### Lints and fixes files
-```
-yarn run lint
-```
+Then in your `main.js`
+```js
+import SmartTable from 'vuejs-smart-table'
 
-### Run your unit tests
+Vue.use(SmartTable)
 ```
-yarn run test:unit
-```
+This will globally register four Components: `v-table`, `v-th`, `v-tr` and `smart-pagination`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Documentation
+Please read the [documentation](https://cli.vuejs.org/config/) to learn how to use it.
