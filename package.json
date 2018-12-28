@@ -1,6 +1,7 @@
 {
   "name": "vuejs-smart-table",
-  "version": "0.0.1",
+  "keywords": ["vue", "table", "grid", "datagrid"],
+  "version": "0.0.3",
   "private": false,
   "main": "src/main.js",
   "author": "Hector Romero Granillo",
