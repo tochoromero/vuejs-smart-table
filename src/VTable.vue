@@ -2,7 +2,6 @@
   <table>
     <slot name="head"/>
     <slot name="body" :displayData="displayData"/>
-
   </table>
 </template>
 
@@ -183,6 +182,26 @@ export default {
       }
 
       this.$emit('update:currentPage', page)
+    },
+    selectRow (row) {
+      this.store.selectRow(row)
+    },
+    selectRows (rows) {
+      this.store.selectRows(rows)
+    },
+    deselectRow (row) {
+      this.store.deselectRow(row)
+    },
+    deselectRows (rows) {
+      this.store.deselectRows(rows)
+    },
+    selectAll () {
+      if (this.selectionMode === 'single') return
+
+      this.store.selectAll(this.data)
+    },
+    deselectAll () {
+      this.store.deselectAll()
     }
   }
 }

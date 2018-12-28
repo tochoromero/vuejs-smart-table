@@ -22,12 +22,28 @@ export default {
         this.selectedRows.push(row)
       }
     },
+    selectRows (rows) {
+      for (let row of rows) {
+        this.selectRow(row)
+      }
+    },
     deselectRow (row) {
       const index = this.selectedRows.indexOf(row)
 
       if (index > -1) {
         this.selectedRows.splice(index, 1)
       }
+    },
+    deselectRows (rows) {
+      for (let row of rows) {
+        this.deselectRow(row)
+      }
+    },
+    selectAll (all) {
+      this.selectedRows = all
+    },
+    deselectAll () {
+      this.selectedRows = []
     },
     setSort ({ sortKey, customSort, sortOrder, sortId }) {
       this.sortKey = sortKey

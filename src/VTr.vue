@@ -1,12 +1,12 @@
 <template>
-    <tr
-            :class="[rowClass]"
-            :style="style"
-            @click="handleRowSelected"
+  <tr
+    :class="[rowClass]"
+    :style="style"
+    @click="handleRowSelected"
 
-    >
-        <slot></slot>
-    </tr>
+  >
+    <slot></slot>
+  </tr>
 </template>
 
 <script>

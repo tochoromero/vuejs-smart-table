@@ -16,7 +16,8 @@ module.exports = {
       'the-basics/',
       'filtering/',
       'sorting/',
-      'pagination/'
+      'pagination/',
+      'selection/'
     ]
   }
 }
