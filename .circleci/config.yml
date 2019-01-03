@@ -9,4 +9,3 @@ jobs:
       - run: yarn test:unit
       - store_test_results:
           path: tests/results
-      - run: yarn build
