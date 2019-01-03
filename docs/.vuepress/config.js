@@ -11,6 +11,8 @@ module.exports = {
   },
   themeConfig: {
     repo: 'tochoromero/vuejs-smart-table',
+    docsDir: 'docs',
+    editLinks: true,
     sidebarDepth: 1,
     sidebar: [
       '/',
