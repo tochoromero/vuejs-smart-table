@@ -10,6 +10,7 @@ module.exports = {
     }
   },
   themeConfig: {
+    repo: 'tochoromero/vuejs-smart-table',
     sidebarDepth: 1,
     sidebar: [
       '/',
