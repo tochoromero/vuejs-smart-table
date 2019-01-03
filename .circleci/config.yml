@@ -4,4 +4,6 @@ jobs:
     steps:
       - run: yarn install
       - run: yarn test:unit
+      - store_test_results:
+          path: test-results
       - run: yarn build
