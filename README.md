@@ -8,6 +8,9 @@ renders as a standard HTML table it is compatible with CSS Frameworks such as Bo
 
 Out of the box you will get filtering, column sorting, client side pagination and row selection.
 
+## Full Documentation
+Please read the [documentation](https://tochoromero.github.io/vuejs-smart-table/) to learn how to use it.
+
 ## Installation
 To install simply run
 ```
@@ -25,6 +28,3 @@ import SmartTable from 'vuejs-smart-table'
 Vue.use(SmartTable)
 ```
 This will globally register four Components: `v-table`, `v-th`, `v-tr` and `smart-pagination`
-
-## Documentation
-Please read the [documentation](https://tochoromero.github.io/vuejs-smart-table/) to learn how to use it.
