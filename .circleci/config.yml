@@ -1,7 +1,8 @@
 version: 2.1
 jobs:
   build:
-    machine: true
+   docker:
+     - image: circleci/node
     steps:
       - run: yarn install
       - run: yarn test:unit
