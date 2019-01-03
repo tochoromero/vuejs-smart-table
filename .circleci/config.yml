@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: circleci/node
     steps:
+      - checkout
       - run: yarn install
       - run: yarn test:unit
       - store_test_results:
