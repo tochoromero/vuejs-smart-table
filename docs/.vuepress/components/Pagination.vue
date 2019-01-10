@@ -23,7 +23,7 @@
         </tbody>
       </v-table>
 
-      <SmartPagination
+      <smart-pagination
         :currentPage.sync="currentPage"
         :totalPages="totalPages"
       />
