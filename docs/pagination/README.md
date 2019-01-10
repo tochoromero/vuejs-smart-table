@@ -66,7 +66,7 @@ use it for the `totalPages` property on the `SmartPagination` component.
         </tbody>
       </v-table>
     
-      <SmartPagination
+      <smart-pagination
         :currentPage.sync="currentPage"
         :totalPages="totalPages"
       />
