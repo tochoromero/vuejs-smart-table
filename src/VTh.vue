@@ -84,6 +84,9 @@ export default {
         customSort: this.customSort,
         sortId: this.id
       })
+      this.$nextTick(() => {
+        this.$emit('defaultSort')
+      })
     }
   },
   methods: {

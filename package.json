@@ -6,7 +6,7 @@
     "grid",
     "datagrid"
   ],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": false,
   "main": "src/main.js",
   "author": "Hector Romero Granillo",
