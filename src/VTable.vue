@@ -63,7 +63,8 @@ export default {
   },
   data () {
     return {
-      state: this.store._data
+      state: this.store._data,
+      initialLoad: false
     }
   },
   computed: {
@@ -108,6 +109,15 @@ export default {
     }
   },
   watch: {
+    displayData: {
+      handler () {
+        if (!this.initialLoad) {
+          this.initialLoad = true
+          this.$emit('loaded', this)
+        }
+      },
+      immediate: true
+    },
     selectionMode: {
       handler (mode) {
         this.state.selectionMode = mode
@@ -165,7 +175,12 @@ export default {
         return true
       }
 
-      let index = this.sortedData.indexOf(item)
+      let index
+      if (typeof item === 'function') {
+        index = this.sortedData.findIndex(item)
+      } else {
+        index = this.sortedData.indexOf(item)
+      }
 
       if (index === -1) {
         return false
