@@ -1,3 +1,6 @@
+import cloneDeep from 'lodash.clonedeep'
+import isEqual from 'lodash.isequal'
+
 export default {
   data: () => ({
     selectedRows: [],
@@ -14,12 +17,12 @@ export default {
     selectRow (row) {
       if (this.selectionMode === 'single') {
         this.selectedRows = [row]
-        return
-      }
+      } else if (this.selectionMode === 'multiple') {
+        const index = this.selectedRows.indexOf(row)
 
-      const index = this.selectedRows.indexOf(row)
-      if (index === -1) {
-        this.selectedRows.push(row)
+        if (index === -1) {
+          this.selectedRows.push(row)
+        }
       }
     },
     selectRows (rows) {
@@ -28,10 +31,13 @@ export default {
       }
     },
     deselectRow (row) {
-      const index = this.selectedRows.indexOf(row)
+      if (this.selectionMode === 'single' || this.selectionMode === 'multiple') {
+        const found = this.selectedRows.find((selected) => isEqual(row, selected))
+        const index = this.selectedRows.indexOf(found)
 
-      if (index > -1) {
-        this.selectedRows.splice(index, 1)
+        if (index > -1) {
+          this.selectedRows.splice(index, 1)
+        }
       }
     },
     deselectRows (rows) {
@@ -40,7 +46,9 @@ export default {
       }
     },
     selectAll (all) {
-      this.selectedRows = all
+      if (this.selectionMode === 'single' || this.selectionMode === 'multiple') {
+        this.selectedRows = cloneDeep(all)
+      }
     },
     deselectAll () {
       this.selectedRows = []

@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import isEqual from 'lodash.isequal'
 
 export default {
   name: 'v-tr',
@@ -36,7 +37,7 @@ export default {
   },
   computed: {
     isSelected () {
-      return this.state.selectedRows.find(it => it === this.row)
+      return this.state.selectedRows.find(row => isEqual(row, this.row))
     },
     rowClass: function () {
       return this.isSelected ? this.state.selectedClass : ''
