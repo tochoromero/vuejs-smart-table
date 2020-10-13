@@ -1,5 +1,7 @@
-export default {
-  data: () => ({
+import { reactive } from 'vue'
+
+export default function createStore () {
+  const store = reactive({
     selectedRows: [],
     selectionMode: 'single',
     customSelection: null,
@@ -9,47 +11,53 @@ export default {
     sortKey: null,
     customSort: null,
     sortOrder: null
-  }),
-  methods: {
-    selectRow (row) {
-      if (this.selectionMode === 'single') {
-        this.selectedRows = [row]
-        return
-      }
+  })
 
-      const index = this.selectedRows.indexOf(row)
-      if (index === -1) {
-        this.selectedRows.push(row)
-      }
-    },
-    selectRows (rows) {
-      for (let row of rows) {
-        this.selectRow(row)
-      }
-    },
-    deselectRow (row) {
-      const index = this.selectedRows.indexOf(row)
+  store.selectRow = (row) => {
+    if (store.selectionMode === 'single') {
+      store.selectedRows = [row]
+      return
+    }
 
-      if (index > -1) {
-        this.selectedRows.splice(index, 1)
-      }
-    },
-    deselectRows (rows) {
-      for (let row of rows) {
-        this.deselectRow(row)
-      }
-    },
-    selectAll (all) {
-      this.selectedRows = all
-    },
-    deselectAll () {
-      this.selectedRows = []
-    },
-    setSort ({ sortKey, customSort, sortOrder, sortId }) {
-      this.sortKey = sortKey
-      this.customSort = customSort
-      this.sortOrder = sortOrder
-      this.sortId = sortId
+    if (!store.selectedRows.includes(row)) {
+      store.selectedRows = store.selectRows.push(row)
     }
   }
+
+  store.selectRows = (rows) => {
+    for (const row of rows) {
+      store.selectRow(row)
+    }
+  }
+
+  store.deselectRow = (row) => {
+    const index = store.selectedRows.indexOf(row)
+
+    if (index > -1) {
+      store.selectedRows = store.selectedRows.splice(index, 1)
+    }
+  }
+
+  store.deselectRows = (rows) => {
+    for (const row of rows) {
+      store.deselectRow(row)
+    }
+  }
+
+  store.selectAll = (all) => {
+    store.selectedRows = all
+  }
+
+  store.deselectAll = () => {
+    store.selectedRows = []
+  }
+
+  store.setSort = ({ sortKey, customSort, sortOrder, sortId }) => {
+    store.sortKey = sortKey
+    store.customSort = customSort
+    store.sortOrder = sortOrder
+    store.sortId = sortId
+  }
+
+  return store
 }

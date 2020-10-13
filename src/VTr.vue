@@ -21,7 +21,7 @@ export default {
   inject: ['store'],
   data () {
     return {
-      state: this.store._data
+      state: this.store
     }
   },
   mounted () {

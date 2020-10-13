@@ -50,7 +50,7 @@ export default {
       id: uuid(),
       order: 0,
       orderClasses: ['vt-desc', 'vt-sortable', 'vt-asc'],
-      state: this.store._data
+      state: this.store
     }
   },
   computed: {

@@ -7,8 +7,7 @@
 
 <script>
 import { doFilter, doSort, calculateTotalPages, doPaginate } from './table-utils'
-import store from './store'
-import Vue from 'vue'
+import createStore from './store'
 
 export default {
   name: 'SmartTable',
@@ -54,7 +53,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.store = new Vue(store)
+    this.store = createStore()
   },
   provide () {
     return {
@@ -63,7 +62,7 @@ export default {
   },
   data () {
     return {
-      state: this.store._data,
+      state: this.store,
       initialLoad: false
     }
   },
