@@ -46,6 +46,7 @@ export default {
       id: uuid(),
       order: 0,
       orderClasses: ['vt-desc', 'vt-sortable', 'vt-asc'],
+      ariaLabels: ['descending', 'none', 'ascending'],
       state: this.store._data
     }
   },
@@ -58,6 +59,9 @@ export default {
     },
     sortClass () {
       return this.state.hideSortIcons ? [this.orderClasses[this.order + 1], 'vt-sort'] : []
+    },
+    ariaSortLabel () {
+      return this.ariaLabels[this.order + 1]
     }
   },
   watch: {
