@@ -121,7 +121,8 @@ export default {
   methods: {
     sort: function () {
       if (this.sortEnabled) {
-        this.order = this.order === 0 || this.order === -1 ? this.order + 1 : -1
+        this.order = this.order === 1 ? -1 : 1
+        // this.order = this.order === 0 || this.order === -1 ? this.order + 1 : -1
         this.store.setSort({
           sortOrder: this.order,
           sortKey: this.sortKey,
