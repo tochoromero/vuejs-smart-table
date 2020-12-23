@@ -1,7 +1,7 @@
-import VTable from './VTable'
-import VTh from './VTh'
-import VTr from './VTr'
-import SmartPagination from './SmartPagination'
+import VTable from './VTable.vue'
+import VTh from './VTh.vue'
+import VTr from './VTr.vue'
+import SmartPagination from './SmartPagination.vue'
 
 export {
   VTable,
