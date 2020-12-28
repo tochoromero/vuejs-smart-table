@@ -1,104 +1,141 @@
 <template>
-  <th @click="sort" :class="sortClass">
+  <th
+    :class="sortClass"
+    @click="sort"
+  >
     <template v-if="!state.hideSortIcons">
-      <slot name="descIcon" v-if="order === -1">
-        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-          <path fill="currentColor" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"/>
+      <slot
+        v-if="order === -1"
+        name="descIcon"
+      >
+        <svg
+          width="16"
+          height="16"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 320 512"
+        >
+          <path
+            fill="currentColor"
+            d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
+          />
         </svg>
       </slot>
-      <slot name="sortIcon" v-else-if="order === 0">
-        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-          <path fill="currentColor" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"/></svg>
+      <slot
+        v-else-if="order === 0"
+        name="sortIcon"
+      >
+        <svg
+          width="16"
+          height="16"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 320 512"
+        >
+          <path
+            fill="currentColor"
+            d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+          /></svg>
       </slot>
-      <slot name="ascIcon" v-else-if="order === 1">
-        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-          <path fill="currentColor" d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"/>
+      <slot
+        v-else-if="order === 1"
+        name="ascIcon"
+      >
+        <svg
+          width="16"
+          height="16"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 320 512"
+        >
+          <path
+            fill="currentColor"
+            d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
+          />
         </svg>
       </slot>
     </template>
-    <slot/>
+    <slot />
   </th>
 </template>
 
-<script>
+<script lang="ts">
 import { uuid } from './table-utils'
+import { computed, defineComponent, ref, watch, onMounted, PropType, nextTick } from 'vue-demi'
+import { CustomSort, SortKey } from '@/types'
+import { useStore } from '@/use-store'
 
-export default {
-  name: 'v-th',
+export default defineComponent({
+  name: 'VTh',
   props: {
     sortKey: {
+      type: [String, Function] as PropType<SortKey>,
       required: false,
-      type: [String, Function]
+      default: null
     },
     customSort: {
+      type: Function as PropType<CustomSort>,
       required: false,
-      type: Function
+      default: null
     },
     defaultSort: {
+      type: String as PropType<'asc' | 'desc'>,
       required: false,
-      type: String,
-      validator: value => ['asc', 'desc'].includes(value)
+      validator: (value: any) => ['asc', 'desc', null].includes(value),
+      default: null
     }
   },
-  inject: ['store'],
-  data () {
-    return {
-      id: uuid(),
-      order: 0,
-      orderClasses: ['vt-desc', 'vt-sortable', 'vt-asc'],
-      state: this.store._data
-    }
-  },
-  computed: {
-    sortEnabled () {
-      return this.sortKey || typeof this.customSort === 'function'
-    },
-    sortId () {
-      return this.state.sortId
-    },
-    sortClass () {
-      return this.state.hideSortIcons ? [this.orderClasses[this.order + 1], 'vt-sort'] : []
-    }
-  },
-  watch: {
-    sortId (sortId) {
-      if (sortId !== this.id && this.order !== 0) {
-        this.order = 0
-      }
-    }
-  },
-  mounted () {
-    if (!this.sortKey && !this.customSort) {
+  emits: ['defaultSort'],
+  setup (props, { emit }) {
+    const { sortId, hideSortIcons, setSort } = useStore()
+
+    if (!props.sortKey && !props.customSort) {
       throw new Error('Must provide the Sort Key value or a Custom Sort function.')
     }
 
-    if (this.defaultSort) {
-      this.order = this.defaultSort === 'desc' ? -1 : 1
-      this.store.setSort({
-        sortOrder: this.order,
-        sortKey: this.sortKey,
-        customSort: this.customSort,
-        sortId: this.id
-      })
-      this.$nextTick(() => {
-        this.$emit('defaultSort')
-      })
-    }
-  },
-  methods: {
-    sort: function () {
-      if (this.sortEnabled) {
-        this.order = this.order === 0 || this.order === -1 ? this.order + 1 : -1
-        this.store.setSort({
-          sortOrder: this.order,
-          sortKey: this.sortKey,
-          customSort: this.customSort,
-          sortId: this.id
+    const id = uuid()
+    const orderClasses = ['vt-desc', 'vt-sortable', 'vt-asc']
+    const order = ref(0)
+
+    onMounted(() => {
+      if (props.defaultSort) {
+        order.value = props.defaultSort === 'desc' ? -1 : 1
+        setSort({
+          sortOrder: order.value,
+          sortKey: props.sortKey,
+          customSort: props.customSort,
+          sortId: id
+        })
+        nextTick(() => {
+          emit('defaultSort')
         })
       }
+    })
+
+    const sortClass = computed(() => {
+      return hideSortIcons.value ? [orderClasses[order.value + 1], 'vt-sort'] : []
+    })
+
+    watch(sortId, () => {
+      if (sortId.value !== id && order.value !== 0) {
+        order.value = 0
+      }
+    })
+
+    const sort = () => {
+      order.value = [0, -1].includes(order.value) ? order.value + 1 : -1
+      setSort({
+        sortOrder: order.value,
+        sortKey: props.sortKey,
+        customSort: props.customSort,
+        sortId: id
+      })
+    }
+
+    return {
+      order,
+      sortClass,
+      sort
     }
   }
-}
+})
 </script>
 
 <style scoped>

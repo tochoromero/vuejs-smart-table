@@ -3,63 +3,51 @@
     :class="[rowClass]"
     :style="style"
     @click="handleRowSelected"
-
   >
-    <slot></slot>
+    <slot v-bind="{ isSelected }" />
   </tr>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent } from 'vue-demi'
+import { useStore } from './use-store'
 
-export default {
-  name: 'v-tr',
+export default defineComponent({
+  name: 'VTr',
   props: {
     row: {
+      type: Object,
       required: true
     }
   },
-  inject: ['store'],
-  data () {
-    return {
-      state: this.store._data
-    }
-  },
-  mounted () {
-    if (!this.state.customSelection) {
-      this.$el.style.cursor = 'pointer'
-    }
-  },
-  beforeDestroy () {
-    if (!this.state.customSelection) {
-      this.$el.removeEventListener('click', this.handleRowSelected)
-    }
-  },
-  computed: {
-    isSelected () {
-      return this.state.selectedRows.find(it => it === this.row)
-    },
-    rowClass: function () {
-      return this.isSelected ? this.state.selectedClass : ''
-    },
-    style () {
-      return {
-        ...(!this.state.customSelection ? { cursor: 'pointer' } : {})
-      }
-    }
-  },
-  methods: {
-    handleRowSelected (event) {
-      if (this.state.customSelection) return
+  setup (props) {
+    const { selectedRows, selectedClass, customSelection, deselectRow, selectRow } = useStore()
 
-      let source = event.target || event.srcElement
-      if (source.tagName.toLowerCase() === 'td') {
-        if (this.isSelected) {
-          this.store.deselectRow(this.row)
+    const isSelected = computed(() => selectedRows.value.find(it => it === props.row))
+    const rowClass = computed(() => isSelected.value ? selectedClass.value : '')
+    const style = computed(() => ({ ...(!customSelection.value ? { cursor: 'pointer' } : {}) }))
+
+    const handleRowSelected = (event: Event) => {
+      if (customSelection.value) {
+        return
+      }
+
+      const source = event.target as HTMLElement
+      if (source?.tagName.toLowerCase() === 'td') {
+        if (isSelected.value) {
+          deselectRow(props.row)
         } else {
-          this.store.selectRow(this.row)
+          selectRow(props.row)
         }
       }
     }
+
+    return {
+      rowClass,
+      style,
+      handleRowSelected,
+      isSelected
+    }
   }
-}
+})
 </script>

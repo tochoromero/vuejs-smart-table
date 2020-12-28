@@ -34,7 +34,7 @@
 <script>
 import users from './data.json'
 import VTable from '../../../src/VTable.vue'
-import SmartPagination from '../../../src/SmartPagination.vue'
+import SmartPagination from '../../../src/VTPagination.vue'
 
 export default {
   name: 'Pagination',

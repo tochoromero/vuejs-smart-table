@@ -1,7 +1,7 @@
 import { expect } from 'chai'
-import { calculateTotalPages, isNumeric, getPropertyValue, doPaginate } from '../../src/table-utils.js'
+import { calculateTotalPages, isNumeric, getPropertyValue, doPaginate } from '../../src/table-utils'
 
-let scenario = [
+const totalPagesSceneario = [
   { totalItems: 10, pageSize: 5, result: 2 },
   { totalItems: 1, pageSize: 10, result: 1 },
   { totalItems: 11, pageSize: 10, result: 2 },
@@ -9,7 +9,7 @@ let scenario = [
   { totalItems: 200, pageSize: 1, result: 200 }
 ]
 
-scenario.forEach(({ totalItems, pageSize, result }) => {
+totalPagesSceneario.forEach(({ totalItems, pageSize, result }) => {
   describe('calculateTotalPages', () => {
     it(`Should be ${result} pages when totalItems is ${totalItems} and pageSize: is ${pageSize}`, () => {
       expect(calculateTotalPages(totalItems, pageSize))
@@ -18,7 +18,7 @@ scenario.forEach(({ totalItems, pageSize, result }) => {
   })
 })
 
-scenario = [
+const isNumericScenario = [
   { toCheck: 5, result: true },
   { toCheck: 1.0, result: true },
   { toCheck: -1.0, result: true },
@@ -34,7 +34,7 @@ scenario = [
   { toCheck: { value: 1 }, result: false }
 ]
 
-scenario.forEach(({ toCheck, result }) => {
+isNumericScenario.forEach(({ toCheck, result }) => {
   describe('isNumeric', () => {
     it(`${toCheck} should ${result ? '' : 'not'} be numeric`, () => {
       expect(isNumeric(toCheck))
@@ -43,7 +43,7 @@ scenario.forEach(({ toCheck, result }) => {
   })
 })
 
-scenario = [
+const getPropertyValueScenario = [
   { object: { value: 'asd', values: 123 }, path: 'value', result: 'asd' },
   { object: { value: 'asd', values: 123 }, path: '[value]', result: 'asd' },
   { object: { a: { b: { c: 13 } } }, path: 'a.b.c', result: 13 },
@@ -52,7 +52,7 @@ scenario = [
   { object: {}, path: 'empty', result: undefined }
 ]
 
-scenario.forEach(({ object, path, result }) => {
+getPropertyValueScenario.forEach(({ object, path, result }) => {
   describe('getPropertyValue', () => {
     it(`path '${path}' should be ${result}`, () => {
       expect(getPropertyValue(object, path))
@@ -61,8 +61,8 @@ scenario.forEach(({ object, path, result }) => {
   })
 })
 
-let toPaginate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-scenario = [
+const toPaginate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const paginateScenario = [
   { pageSize: 3, currentPage: 1, result: [1, 2, 3] },
   { pageSize: 5, currentPage: 2, result: [6, 7, 8, 9, 10] },
   { pageSize: 2, currentPage: 3, result: [5, 6] },
@@ -72,7 +72,7 @@ scenario = [
   { pageSize: 5, currentPage: 0, result: toPaginate }
 ]
 
-scenario.forEach(({ pageSize, currentPage, result }) => {
+paginateScenario.forEach(({ pageSize, currentPage, result }) => {
   describe('doPaginate', () => {
     it(`With size: ${pageSize} and currentPage: ${currentPage} it should return ${result}`, () => {
       expect(doPaginate(toPaginate, pageSize, currentPage))

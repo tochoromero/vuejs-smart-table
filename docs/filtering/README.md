@@ -29,6 +29,11 @@ This is an Array of Strings indicating what fields of each row the filter `value
 You must provide at least one key. If more than one key is provided as long as one of the row fields matches the filter,
 the row will be displayed.
 
+### exact <Badge text="Boolean" type="success"/>
+If set to `true` the value comparison will be done with `===` forcing it to be an exact match.
+
+By default, `exact` is set to `false` thus the values are converted to lowercase strings and then compared.
+
 #### Example
 ```js
 import users from './users.json'

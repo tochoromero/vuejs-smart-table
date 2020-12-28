@@ -6,53 +6,54 @@
     "grid",
     "datagrid"
   ],
-  "version": "0.0.6",
+  "version": "0.1.0",
   "private": false,
-  "main": "src/main.js",
+  "main": "dist/smart-table.umd.js",
+  "module": "dist/smart-table.common.js",
+  "typings": "./dist/types/src/main.d.ts",
   "author": "Hector Romero Granillo",
   "repository": "https://github.com/tochoromero/vuejs-smart-table",
   "license": "MIT",
   "scripts": {
-    "build": "vue-cli-service build --target lib --name smart-table src/main.js",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name smart-table src/main.ts",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit --reporter mocha-junit-reporter --reporter-options mochaFile=./tests/results/test_results.xml",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
-    "vue": "^2.5.17"
+    "vue-demi": "^0.5.3"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-beta.1",
+    "core-js": "^3.0.0",
+    "vue": "^2.0.0 || >=3.0.0-rc.0"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.6.3",
-    "@vue/cli-plugin-babel": "^3.1.1",
-    "@vue/cli-plugin-eslint": "^3.1.5",
-    "@vue/cli-plugin-unit-mocha": "^3.1.1",
-    "@vue/cli-service": "^3.1.4",
-    "@vue/eslint-config-standard": "^4.0.0",
-    "@vue/test-utils": "^1.0.0-beta.20",
-    "babel-eslint": "^10.0.1",
-    "bootstrap": "^4.2.1",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^5.2.4",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-unit-mocha": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/test-utils": "^2.0.0-0",
     "chai": "^4.1.2",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0-0",
-    "lint-staged": "^7.2.2",
-    "mocha-junit-reporter": "^1.18.0",
-    "sass": "^1.30.0",
-    "sass-loader": "^10.1.0",
-    "vue-template-compiler": "^2.5.17",
-    "vuepress": "^0.14.8"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^7.0.0-0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "typescript": "~3.9.3",
+    "vue": "^3.0.4"
   }
 }
