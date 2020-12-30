@@ -213,7 +213,7 @@ export default {
     selectAll () {
       if (this.selectionMode === 'single') return
 
-      this.store.selectAll(this.data)
+      this.store.selectAll([...this.data])
     },
     deselectAll () {
       this.store.deselectAll()
