@@ -27,5 +27,6 @@ module.exports = {
         mocha: true
       }
     }
-  ]
+  ],
+  ignorePatterns: ['build/*']
 }

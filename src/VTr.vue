@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue-demi'
+import { computed, defineComponent } from 'vue'
 import { useStore } from './use-store'
 
 export default defineComponent({
@@ -33,7 +33,7 @@ export default defineComponent({
       }
 
       const source = event.target as HTMLElement
-      if (source?.tagName.toLowerCase() === 'td') {
+      if (source && source.tagName.toLowerCase() === 'td') {
         if (isSelected.value) {
           deselectRow(props.row)
         } else {

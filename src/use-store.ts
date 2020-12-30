@@ -1,4 +1,4 @@
-import { reactive, toRefs, computed, watch, Ref } from 'vue-demi'
+import { reactive, toRefs, computed, watch, Ref } from 'vue'
 import { CustomSort, Filters, SortKey, SelectionMode } from '@/types'
 import { calculateTotalPages, doFilter, doPaginate, doSort } from '@/table-utils'
 

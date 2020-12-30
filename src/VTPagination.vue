@@ -119,7 +119,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue-demi'
+import { computed, defineComponent } from 'vue'
 import { useStore } from './use-store'
 
 export default defineComponent({
@@ -182,7 +182,7 @@ export default defineComponent({
     const getLimitedPages = () => {
       const displayPages = []
       const totalTiers = Math.ceil(totalPages.value / props.maxPageLinks)
-      const activeTier = Math.ceil((currentPage?.value ?? 1) / props.maxPageLinks)
+      const activeTier = Math.ceil(((currentPage && currentPage.value) || 1) / props.maxPageLinks)
 
       const start = ((activeTier - 1) * props.maxPageLinks) + 1
       const end = start + props.maxPageLinks

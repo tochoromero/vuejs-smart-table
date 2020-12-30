@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, toRef, PropType } from 'vue-demi'
+import { defineComponent, watch, toRef, PropType } from 'vue'
 import { Filters, SelectionMode } from '@/types'
 import { useStore } from '@/use-store'
 

@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import { uuid } from './table-utils'
-import { computed, defineComponent, ref, watch, onMounted, PropType, nextTick } from 'vue-demi'
+import { computed, defineComponent, ref, watch, onMounted, PropType, nextTick } from 'vue'
 import { CustomSort, SortKey } from '@/types'
 import { useStore } from '@/use-store'
 

@@ -1,5 +1,27 @@
-module.exports = {
-  presets: [
-    '@vue/cli-plugin-babel/preset'
-  ]
-}
+module.exports =
+  {
+    presets: [
+      [
+        '@babel/env', {
+          modules: false
+        }
+      ]
+    ],
+    plugins: [
+      '@babel/plugin-proposal-class-properties'
+    ],
+    env: {
+      test: {
+        presets: [
+          [
+            '@babel/env', {
+              targets: { node: 'current' }
+            }
+          ]
+        ],
+        plugins: [
+          '@babel/plugin-syntax-dynamic-import'
+        ]
+      }
+    }
+  }
