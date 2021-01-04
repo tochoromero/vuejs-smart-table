@@ -1,5 +1,5 @@
 <template>
-  <th @click="sort" :class="sortClass">
+  <th @click="sort" :class="sortClass" :aria-sort="ariaSortLabel">
     <template v-if="!state.hideSortIcons">
       <slot name="descIcon" v-if="order === -1">
         <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
