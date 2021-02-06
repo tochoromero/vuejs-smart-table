@@ -1,5 +1,5 @@
 <template>
-  <th @click="sort" :class="sortClass">
+  <th @click="sort" :class="sortClass" :aria-sort="ariaSortLabel">
     <template v-if="!state.hideSortIcons">
       <slot name="descIcon" v-if="order === -1">
         <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -46,6 +46,7 @@ export default {
       id: uuid(),
       order: 0,
       orderClasses: ['vt-desc', 'vt-sortable', 'vt-asc'],
+      ariaLabels: ['descending', 'none', 'ascending'],
       state: this.store._data
     }
   },
@@ -58,6 +59,9 @@ export default {
     },
     sortClass () {
       return this.state.hideSortIcons ? [this.orderClasses[this.order + 1], 'vt-sort'] : []
+    },
+    ariaSortLabel () {
+      return this.ariaLabels[this.order + 1]
     }
   },
   watch: {
