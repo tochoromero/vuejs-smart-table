@@ -109,7 +109,7 @@ Specify the text for the First Page link.
 ### Last Text <Badge text="Property"/> <Badge text="lastText: String"/> <Badge text="default: Last"/>
 Specify the text for the Last Page link.
 
-### Direction Links <Badge text="Property"/> <Badge text="hideSinglePage: Boolean"/> <Badge text="default: true"/>
+### Direction Links <Badge text="Property"/> <Badge text="directionLinks: Boolean"/> <Badge text="default: true"/>
 Determines whether or not we should have direction links to navigate back and forth between pages.
 
 ### CSS Customization
