@@ -1,6 +1,6 @@
 import { reactive, toRefs, computed, watch, Ref } from 'vue'
-import { CustomSort, Filters, SortKey, SelectionMode } from '@/types'
-import { calculateTotalPages, doFilter, doPaginate, doSort } from '@/table-utils'
+import { CustomSort, Filters, SortKey, SelectionMode } from './types'
+import { calculateTotalPages, doFilter, doPaginate, doSort } from './table-utils'
 
 interface Sort {
   sortId: string | null;
@@ -199,7 +199,7 @@ export function useStore () {
   const syncProp = <K extends keyof State>(key: K, reference: Ref) => {
     watch(reference, () => {
       state[key] = reference.value
-    })
+    }, { immediate: true })
   }
 
   return {

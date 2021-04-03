@@ -10,8 +10,8 @@
 
 <script lang="ts">
 import { defineComponent, watch, toRef, PropType } from 'vue'
-import { Filters, SelectionMode } from '@/types'
-import { useStore } from '@/use-store'
+import { Filters, SelectionMode } from './types'
+import { useStore } from './use-store'
 
 export default defineComponent({
   name: 'VTable',

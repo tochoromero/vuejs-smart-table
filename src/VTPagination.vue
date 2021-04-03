@@ -1,7 +1,4 @@
-<template
-  replaceable
-  part="pagination"
->
+<template>
   <nav
     v-show="!(hideSinglePage && totalPages === 1)"
     class="smart-pagination"

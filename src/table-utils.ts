@@ -1,4 +1,4 @@
-import { BasicFilter, CustomFilter, Filters } from '@/types'
+import { BasicFilter, CustomFilter, Filters } from './types'
 
 export function getPropertyValue (object: Record<string, any>, keyPath: string) {
   keyPath = keyPath.replace(/\[(\w+)\]/g, '.$1')

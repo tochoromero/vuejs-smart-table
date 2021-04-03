@@ -20,10 +20,10 @@ export default defineComponent({
       required: true
     }
   },
-  setup (props) {
+  setup (props: any) {
     const { selectedRows, selectedClass, customSelection, deselectRow, selectRow } = useStore()
 
-    const isSelected = computed(() => selectedRows.value.find(it => it === props.row))
+    const isSelected = computed(() => selectedRows.value.find((it: any) => it === props.row))
     const rowClass = computed(() => isSelected.value ? selectedClass.value : '')
     const style = computed(() => ({ ...(!customSelection.value ? { cursor: 'pointer' } : {}) }))
 
