@@ -55,7 +55,7 @@ export default defineComponent({
       type: Boolean
     }
   },
-  emits: ['loaded'],
+  emits: ['loaded', 'displayData'],
   setup (props, { emit }) {
     const { displayData, syncProp } = useStore()
 
@@ -65,6 +65,8 @@ export default defineComponent({
         initialLoad = true
         emit('loaded')
       }
+
+      emit('displayData', displayData.value)
     }, { immediate: true })
 
     syncProp('data', toRef(props, 'data'))
