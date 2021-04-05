@@ -6,6 +6,7 @@
   ],
   "main": "./dist/vuejs-smart-table.umd.js",
   "module": "./dist/vuejs-smart-table.es.js",
+  "types": "./dist/vuejs-smart-table.d.ts",
   "exports": {
     ".": {
       "import": "./dist/vuejs-smart-table.es.js",
@@ -14,17 +15,21 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc --noEmit && vite build && yarn run tsDeclaration",
+    "vueDeclaration": "vue-dts-gen \"src/*.vue\"",
+    "tsDeclaration": "tsc -d --outFile dist/vuejs-smart-table --emitDeclarationOnly src/types.ts",
     "serve": "vite preview"
   },
   "peerDependencies": {
     "vue": "^3"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.1.4",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@vitejs/plugin-vue": "^1.2.1",
+    "@vue/compiler-sfc": "^3.0.11",
     "typescript": "^4.1.3",
-    "vite": "^2.0.1",
-    "vue": "^3.0.5"
+    "vite": "^2.1.5",
+    "vue": "^3.0.5",
+    "vue-dts-gen": "^0.2.3",
+    "vue-tsc": "^0.0.19"
   }
 }

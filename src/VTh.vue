@@ -71,7 +71,7 @@ export default defineComponent({
       default: null
     },
     customSort: {
-      type: Function as PropType<CustomSort>,
+      type: [Function, Object] as PropType<CustomSort>,
       required: false,
       default: null
     },

@@ -17,7 +17,7 @@ interface State extends Sort {
   customSelection: boolean;
   selectedClass: string;
   hideSortIcons: boolean;
-  currentPage?: number;
+  currentPage: number;
   pageSize?: number;
 }
 
@@ -33,7 +33,7 @@ const state: State = reactive({
   sortKey: null,
   customSort: null,
   sortOrder: 0,
-  currentPage: undefined,
+  currentPage: 0,
   pageSize: undefined
 })
 
