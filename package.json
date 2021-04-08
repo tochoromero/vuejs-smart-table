@@ -15,9 +15,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && yarn run tsDeclaration",
-    "vueDeclaration": "vue-dts-gen \"src/*.vue\"",
-    "tsDeclaration": "tsc -d --outFile dist/vuejs-smart-table --emitDeclarationOnly src/types.ts",
+    "build": "vue-tsc --noEmit && vite build && yarn run tsDeclaration && yarn run vueDeclaration",
+    "vueDeclaration": "vue-dts-gen --outDir dist/types \"src/*.vue\"",
+    "tsDeclaration": "tsc -d --outDir dist/types --emitDeclarationOnly src/vuejs-smart-table.ts",
     "serve": "vite preview"
   },
   "peerDependencies": {
