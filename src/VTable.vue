@@ -1,10 +1,14 @@
 <template>
   <table>
-    <slot name="head" />
-    <slot
-      name="body"
-      :displayData="displayData"
-    />
+    <thead>
+      <slot name="head" />
+    </thead>
+    <tbody>
+      <slot
+          name="body"
+          :rows="displayData"
+      />
+    </tbody>
   </table>
 </template>
 
