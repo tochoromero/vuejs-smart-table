@@ -1,9 +1,13 @@
 # Getting Started
-Vue Smart Table was created out of the need for a simple highly customizable data table plugin that could take advantage of Vue's slots. It has no dependencies but Vue and because it renders as a standard HTML table it is compatible with CSS Frameworks such as Bootstrap and Foundation.
 
-Out of the box you will get filtering, column sorting, client side pagination and row selection.
+### Why Smart Table
+There are a lot of Data Table plugins out there, some of them are very good but pretty much all of them are very complicated to use.
+What I really wanted was the simplicity of a vanilla HTML table but with the power of the more complex Data Table plugins.
 
-## Installation
+Vue Smart Table is the answer to that need. Creating a Smart Table is almost as simply as creating a Vanilla HTML Table.
+When you need it, you can enable extra functionality in a way that feels natural. It is very straight forward, you can learn everything you need to know on one sit.
+
+### Installation
 To install simply run
 ```
 npm add vuejs-smart-table
@@ -20,5 +24,3 @@ import SmartTable from 'vuejs-smart-table'
 Vue.use(SmartTable)
 ```
 This will globally register four Components: `VTable`, `VTh`, `VTr` and `VTPagination`
-
-Next learn how to create a [basic table](/basics/README.md)  
