@@ -1,6 +1,6 @@
 import { BasicFilter, CustomFilter, Filters } from './types'
 
-export function getPropertyValue (object: Record<string, any>, keyPath: string) {
+export function getPropertyValue(object: Record<string, any>, keyPath: string) {
   keyPath = keyPath.replace(/\[(\w+)\]/g, '.$1')
   keyPath = keyPath.replace(/^\./, '')
   const keys = keyPath.split('.')
@@ -17,11 +17,11 @@ export function getPropertyValue (object: Record<string, any>, keyPath: string) 
   return copy
 }
 
-export function isNumeric (toCheck: any): boolean {
+export function isNumeric(toCheck: any): boolean {
   return !Array.isArray(toCheck) && !isNaN(parseFloat(toCheck)) && isFinite(toCheck)
 }
 
-export function doSort (
+export function doSort(
   toSort: any[],
   sortKey: string | ((obj: any, sortOrder: number) => any) | null,
   customSort: ((a: any, b: any, sortOrder: number) => number) | null,
@@ -61,15 +61,15 @@ export function doSort (
   })
 }
 
-export function isBasicFilter (filter?: any): filter is BasicFilter {
+export function isBasicFilter(filter?: any): filter is BasicFilter {
   return Array.isArray(filter.keys)
 }
 
-function isCustomFilter (filter: any): filter is CustomFilter {
+function isCustomFilter(filter: any): filter is CustomFilter {
   return filter && typeof filter.custom === 'function'
 }
 
-export function passFilter (item: Record<string, unknown>, filter: BasicFilter | CustomFilter) {
+export function passFilter(item: Record<string, unknown>, filter: BasicFilter | CustomFilter) {
   if (isCustomFilter(filter) && !filter.custom(filter.value, item)) {
     return false
   }
@@ -100,19 +100,14 @@ export function passFilter (item: Record<string, unknown>, filter: BasicFilter |
   return false
 }
 
-export function doFilter (toFilter: any[], filters: Filters) {
+export function doFilter(toFilter: any[], filters: Filters) {
   const filteredData = []
 
   for (const item of toFilter) {
     let passed = true
 
-    for (const filterName in Object.keys(filters)) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (!filters.hasOwnProperty(filterName)) {
-        continue
-      }
-
-      const filter: CustomFilter | BasicFilter = filters[filterName]
+    for (const filterName of Object.keys(filters)) {
+      const filter = filters[filterName]
 
       if (!passFilter(item, filter)) {
         passed = false
@@ -128,7 +123,7 @@ export function doFilter (toFilter: any[], filters: Filters) {
   return filteredData
 }
 
-export function doPaginate (toPaginate: any[], pageSize: number, currentPage: number): any[] {
+export function doPaginate(toPaginate: any[], pageSize: number, currentPage: number): any[] {
   if (toPaginate.length <= pageSize || pageSize <= 0 || currentPage <= 0) {
     return toPaginate
   }
@@ -139,10 +134,10 @@ export function doPaginate (toPaginate: any[], pageSize: number, currentPage: nu
   return [...toPaginate].slice(start, end)
 }
 
-export function calculateTotalPages (totalItems: number, pageSize: number): number {
+export function calculateTotalPages(totalItems: number, pageSize: number): number {
   return totalItems <= pageSize ? 1 : Math.ceil(totalItems / pageSize)
 }
 
-export function uuid (): string {
+export function uuid(): string {
   return '_' + Math.random().toString(36).substr(2, 9)
 }

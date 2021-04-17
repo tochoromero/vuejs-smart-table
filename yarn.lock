@@ -3702,6 +3702,11 @@ vite@^2.1.5:
   optionalDependencies:
     fsevents "~2.3.1"
 
+vue-demi@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.7.4.tgz#4c6be525788e1f6b3fd5d4f5f9f2148cf6645979"
+  integrity sha512-PT0qzI9Rp8R8eUAsTPXADC+KAZdrMufmbZqEMMqvaiesWyjCpgyuuvS5Su8cvBjK9RevLT/YfFiKWxc8YB9/8g==
+
 vue-dts-gen@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/vue-dts-gen/-/vue-dts-gen-0.2.3.tgz#98d1505cc7a47d702e1fa4d2519d25a7de15d3e9"

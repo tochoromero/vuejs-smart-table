@@ -116,7 +116,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue-demi'
 import { useStore } from './use-store'
 
 export default defineComponent({

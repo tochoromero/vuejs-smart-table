@@ -1,12 +1,12 @@
 {
   "name": "vuejs-smart-table",
-  "version": "0.0.1",
+  "version": "0.1.7",
   "files": [
     "dist"
   ],
   "main": "./dist/vuejs-smart-table.umd.js",
   "module": "./dist/vuejs-smart-table.es.js",
-  "types": "./dist/vuejs-smart-table.d.ts",
+  "types": "./dist/types/vuejs-smart-table.d.ts",
   "exports": {
     ".": {
       "import": "./dist/vuejs-smart-table.es.js",
@@ -15,16 +15,22 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && yarn run tsDeclaration && yarn run vueDeclaration",
+    "build": "vue-tsc --noEmit && vite build",
     "vueDeclaration": "vue-dts-gen --outDir dist/types \"src/*.vue\"",
-    "tsDeclaration": "tsc -d --outDir dist/types --emitDeclarationOnly src/vuejs-smart-table.ts",
+    "tsDeclaration": "tsc -d --outDir dist/types --emitDeclarationOnly src/main.ts",
     "serve": "vite preview",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:serve": "vuepress serve docs"
   },
   "peerDependencies": {
-    "vue": "^3"
+    "@vue/composition-api": "^1.0.0-beta.1",
+    "vue": "^2.0.0 || >=3.0.0-rc.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.1",
@@ -36,5 +42,8 @@
     "vue-dts-gen": "^0.2.3",
     "vue-tsc": "^0.0.19",
     "vuepress": "^2.0.0-beta.8"
+  },
+  "dependencies": {
+    "vue-demi": "^0.7.4"
   }
 }

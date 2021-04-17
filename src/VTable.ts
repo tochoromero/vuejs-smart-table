@@ -1,19 +1,4 @@
-<template>
-  <table>
-    <thead>
-      <slot name="head" />
-    </thead>
-    <tbody>
-      <slot
-          name="body"
-          :rows="displayData"
-      />
-    </tbody>
-  </table>
-</template>
-
-<script lang="ts">
-import { defineComponent, watch, toRef, PropType } from 'vue'
+import { defineComponent, watch, toRef, PropType, h } from 'vue-demi'
 import { Filters, SelectionMode } from './types'
 import { useStore } from './use-store'
 
@@ -60,7 +45,7 @@ export default defineComponent({
     }
   },
   emits: ['loaded', 'displayData'],
-  setup (props, { emit }) {
+  setup (props, { emit, slots }) {
     const { displayData, syncProp } = useStore()
 
     let initialLoad = false
@@ -74,7 +59,7 @@ export default defineComponent({
     }, { immediate: true })
 
     syncProp('data', toRef(props, 'data'))
-    syncProp('filters', toRef(props, 'filters'))
+    syncProp('filters', toRef(props, 'filters'), true)
     syncProp('currentPage', toRef(props, 'currentPage'))
     syncProp('pageSize', toRef(props, 'pageSize'))
     syncProp('selectionMode', toRef(props, 'selectionMode'))
@@ -82,9 +67,11 @@ export default defineComponent({
     syncProp('customSelection', toRef(props, 'customSelection'))
     syncProp('hideSortIcons', toRef(props, 'hideSortIcons'))
 
-    return {
-      displayData
+    return () => {
+      return h('table', [
+        h('thead', slots.head?.() ?? []),
+        h('tbody', slots.body?.({ rows: displayData.value }) ?? [])
+      ])
     }
   }
 })
-</script>

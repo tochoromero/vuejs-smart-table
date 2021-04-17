@@ -1,9 +1,10 @@
 <template>
   <div>
-    <VTable :data="users">
+    <input v-model="filters.name.value"/>
+    <VTable :data="users" :filters="filters">
       <template #head>
         <tr>
-          <th>Name</th>
+          <VTh sort-key="name" default-sort="asc">Name</VTh>
           <th>Age</th>
           <th>Email</th>
           <th>Address</th>
@@ -27,11 +28,16 @@
 
 <script>
 import users from './users.json'
+import VTh from '../../src/VTh'
 
 export default {
   name: 'Basics',
+  components: { VTh },
   data: () => ({
-    users: users.splice(0, 10)
+    users: users.splice(0, 10),
+    filters: {
+      name: { value: '', keys: ['name']}
+    }
   })
 }
 </script>

@@ -1,15 +1,4 @@
-<template>
-  <tr
-    :class="[rowClass]"
-    :style="style"
-    @click="handleRowSelected"
-  >
-    <slot v-bind="{ isSelected }" />
-  </tr>
-</template>
-
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, h } from 'vue-demi'
 import { useStore } from './use-store'
 
 export default defineComponent({
@@ -20,7 +9,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup (props: any) {
+  setup(props: any, { slots }) {
     const { selectedRows, selectedClass, customSelection, deselectRow, selectRow } = useStore()
 
     const isSelected = computed(() => selectedRows.value.find((it: any) => it === props.row))
@@ -42,12 +31,14 @@ export default defineComponent({
       }
     }
 
-    return {
-      rowClass,
-      style,
-      handleRowSelected,
-      isSelected
+    return () => {
+      return h('tr', {
+          class: rowClass.value,
+          style: style.value,
+          onClick: handleRowSelected
+        },
+        slots.default?.()
+      )
     }
   }
 })
-</script>
