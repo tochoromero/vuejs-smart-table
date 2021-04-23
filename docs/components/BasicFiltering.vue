@@ -27,7 +27,6 @@
 
 <script>
 import users from './users.json'
-import 'tailwindcss/tailwind.css'
 
 export default {
   name: 'BasicFiltering',
