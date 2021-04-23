@@ -65,9 +65,9 @@ Here is the code for the simplest table you can create:
 ## VTable
 The `VTable` component is the main element of Smart Table, here you will provide most of hte configuration and listen to events.
 
-### Data <Badge type="tip" text="Property" vertical="top" /> <Badge type="tip" text="Array" vertical="top" />
+### Data <Badge type="tip" text="array" vertical="top" />
 `VTable` requires a `data` property, it must be an `array` even if it is initially empty.
-Each entry in the array represents a row in the table.
+Each entry in the array must be an object that represents a row in the table.
 
 It is important to note the array will not be mutated by Smart Table, 
 internally it will create a shallow copy to perform transformations on it.

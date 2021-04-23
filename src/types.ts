@@ -1,13 +1,15 @@
 export interface BasicFilter {
-  value?: string | null;
-  keys: string[];
-  exact: boolean;
+  value: string
+  keys: string[]
+  exact?: boolean
 }
 
 export interface CustomFilter {
-  custom: (value: unknown, row: Record<string, unknown>) => boolean;
-  value?: unknown;
+  value?: any;
+  custom: CustomFilterFunction;
 }
+
+export type CustomFilterFunction = (value: any, row: Record<string, any>) => boolean
 
 export type Filters = Record<string, BasicFilter | CustomFilter>
 

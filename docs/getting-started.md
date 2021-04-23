@@ -10,7 +10,7 @@ When you need it, you can enable extra functionality in a way that feels natural
 ### Installation
 To install simply run
 ```
-npm add vuejs-smart-table
+npm install vuejs-smart-table
 ```
 or
 ```
@@ -23,4 +23,17 @@ import SmartTable from 'vuejs-smart-table'
 
 Vue.use(SmartTable)
 ```
+
 This will globally register four Components: `VTable`, `VTh`, `VTr` and `VTPagination`
+
+### For Vue 2
+This plugin uses [Vue Demi](https://github.com/vueuse/vue-demi) to create a universal package that works in both Vue 2 and Vue 3.
+But in order for it to work in Vue 2 in addition go installing Vue Smart Table, you need to install the composition api package.
+
+```
+npm install @vue/composition-api
+```
+or
+```
+yarn add @vue/composition-api
+```
