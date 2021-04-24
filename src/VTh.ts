@@ -1,64 +1,6 @@
-// <!--<template>-->
-// <!--  <th-->
-// <!--    :class="sortClass"-->
-// <!--    @click="sort"-->
-// <!--  >-->
-// <!--    <template v-if="!hideSortIcons">-->
-// <!--      <template v-if="order === -1">-->
-// <!--        <slot name="descIcon">-->
-// <!--          <svg-->
-// <!--              width="16"-->
-// <!--              height="16"-->
-// <!--              xmlns="http://www.w3.org/2000/svg"-->
-// <!--              viewBox="0 0 320 512"-->
-// <!--          >-->
-// <!--            <path-->
-// <!--                fill="currentColor"-->
-// <!--                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"-->
-// <!--            />-->
-// <!--          </svg>-->
-// <!--        </slot>-->
-// <!--      </template>-->
-// <!--      <template v-else-if="order === 0">-->
-// <!--        <slot-->
-// <!--            name="sortIcon"-->
-// <!--        >-->
-// <!--          <svg-->
-// <!--              width="16"-->
-// <!--              height="16"-->
-// <!--              xmlns="http://www.w3.org/2000/svg"-->
-// <!--              viewBox="0 0 320 512"-->
-// <!--          >-->
-// <!--            <path-->
-// <!--                fill="currentColor"-->
-// <!--                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"-->
-// <!--            />-->
-// <!--          </svg>-->
-// <!--        </slot>-->
-// <!--      </template>-->
-// <!--      <template v-else-if="order === 1">-->
-// <!--        <slot name="ascIcon">-->
-// <!--          <svg-->
-// <!--              width="16"-->
-// <!--              height="16"-->
-// <!--              xmlns="http://www.w3.org/2000/svg"-->
-// <!--              viewBox="0 0 320 512"-->
-// <!--          >-->
-// <!--            <path-->
-// <!--                fill="currentColor"-->
-// <!--                d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"-->
-// <!--            />-->
-// <!--          </svg>-->
-// <!--        </slot>-->
-// <!--      </template>-->
-// <!--    </template>-->
-// <!--    <slot />-->
-// <!--  </th>-->
-// <!--</template>-->
-
 import { uuid } from './table-utils'
-import { computed, defineComponent, ref, watch, onMounted, PropType, nextTick, h, isVue2 } from 'vue-demi'
-import { CustomSort, SortKey } from './types'
+import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, VNode, watch } from 'vue-demi'
+import { CustomSort, SortKey, SortOrder } from './types'
 import { useStore } from './use-store'
 
 export default defineComponent({
@@ -82,7 +24,7 @@ export default defineComponent({
     }
   },
   emits: ['defaultSort'],
-  setup (props, { emit, slots }) {
+  setup(props, { emit, slots }) {
     const { sortId, hideSortIcons, setSort } = useStore()
 
     if (!props.sortKey && !props.customSort) {
@@ -90,8 +32,7 @@ export default defineComponent({
     }
 
     const id = uuid()
-    const orderClasses = ['vt-desc', 'vt-sortable', 'vt-asc']
-    const order = ref(0)
+    const order = ref<SortOrder>(SortOrder.NONE)
 
     onMounted(() => {
       if (props.defaultSort) {
@@ -108,8 +49,45 @@ export default defineComponent({
       }
     })
 
-    const sortClass = computed(() => {
-      return hideSortIcons.value ? [orderClasses[order.value + 1], 'vt-sort'] : []
+    const createSortIcon = (d: string) => {
+      const svgProps = () => {
+        const props = {
+          width: 16,
+          height: 16,
+          xmlns: 'http://www.w3.org/2000/svg',
+          viewBox: '0 0 320 512'
+        }
+
+        return isVue2 ? { attrs: props } : props
+      }
+
+      const pathProps = () => {
+        const props = {
+          fill: 'currentColor',
+          d
+        }
+
+        return isVue2 ? { attrs: props } : props
+      }
+
+      return h('svg', svgProps(), [
+        h('path', pathProps())
+      ])
+    }
+
+    const sortIcon = computed(() => {
+      if (hideSortIcons.value) {
+        return
+      }
+
+      switch (order.value) {
+        case SortOrder.DESC:
+          return createSortIcon('M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z')
+        case SortOrder.ASC:
+          return createSortIcon('M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z')
+        default:
+          return createSortIcon('M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z')
+      }
     })
 
     watch(sortId, () => {
@@ -119,7 +97,12 @@ export default defineComponent({
     })
 
     const sort = () => {
-      order.value = [0, -1].includes(order.value) ? order.value + 1 : -1
+      if ([SortOrder.DESC, SortOrder.NONE].includes(order.value)) {
+        order.value = SortOrder.ASC
+      } else {
+        order.value = SortOrder.DESC
+      }
+
       setSort({
         sortOrder: order.value,
         sortKey: props.sortKey,
@@ -128,19 +111,30 @@ export default defineComponent({
       })
     }
 
+    const children = computed(() => {
+      const children: any = []
+      if (!hideSortIcons.value) {
+        children.push(sortIcon.value)
+      }
+
+      if (slots.default) {
+        children.push(slots.default({ sortOrder: order.value }))
+      }
+
+      return children
+    })
+
     return () => {
-      // TODO DO sort icons
       return h('th', {
-        class: sortClass.value.join(" "),
         ...(isVue2 ? {
           on: {
             click: sort
           }
         } : {
-          onClick: sort,
+          onClick: sort
         })
-      },[
-          slots.default?.() ?? []
+      }, [
+        h('div', children.value)
       ])
     }
   }

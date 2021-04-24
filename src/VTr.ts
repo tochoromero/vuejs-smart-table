@@ -37,7 +37,7 @@ export default defineComponent({
           style: style.value,
           onClick: handleRowSelected
         },
-        slots.default?.()
+        slots.default ? slots.default() : []
       )
     }
   }

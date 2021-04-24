@@ -1,4 +1,4 @@
-import { BasicFilter, CustomFilter, Filters } from './types'
+import { BasicFilter, CustomFilter, Filters, SortKey } from './types'
 
 export function getPropertyValue(object: Record<string, any>, keyPath: string) {
   keyPath = keyPath.replace(/\[(\w+)\]/g, '.$1')
@@ -23,7 +23,7 @@ export function isNumeric(toCheck: any): boolean {
 
 export function doSort(
   toSort: any[],
-  sortKey: string | ((obj: any, sortOrder: number) => any) | null,
+  sortKey: SortKey,
   customSort: ((a: any, b: any, sortOrder: number) => number) | null,
   sortOrder: number) {
   const local = [...toSort]

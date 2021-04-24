@@ -15,5 +15,11 @@ export type Filters = Record<string, BasicFilter | CustomFilter>
 
 export type SelectionMode = 'single' | 'multiple'
 
-export type SortKey = string | ((obj: any, sortOrder: number) => any) | null;
-export type CustomSort = ((a: any, b: any, sortOrder: number) => number) | null;
+export type SortKey = string | ((obj: any, sortOrder: SortOrder) => any) | null;
+export type CustomSort = ((a: any, b: any, sortOrder: SortOrder) => number) | null;
+export enum SortOrder {
+  DESC = -1,
+  NONE = 0,
+  ASC= 1
+}
+

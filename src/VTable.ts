@@ -69,8 +69,8 @@ export default defineComponent({
 
     return () => {
       return h('table', [
-        h('thead', slots.head?.() ?? []),
-        h('tbody', slots.body?.({ rows: displayData.value }) ?? [])
+        h('thead', slots.head? slots.head() : undefined),
+        h('tbody', slots.body? slots.body({ rows: displayData.value }) : undefined)
       ])
     }
   }

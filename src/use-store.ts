@@ -1,5 +1,5 @@
 import { reactive, toRefs, computed, watch, Ref } from 'vue-demi'
-import { CustomSort, Filters, SortKey, SelectionMode } from './types'
+import { CustomSort, Filters, SortKey, SelectionMode, SortOrder } from './types'
 import { calculateTotalPages, doFilter, doPaginate, doSort } from './table-utils'
 
 interface Sort {
@@ -17,6 +17,10 @@ interface State extends Sort {
   customSelection: boolean;
   selectedClass: string;
   hideSortIcons: boolean;
+  sortId: string | null,
+  sortKey: SortKey,
+  customSort: CustomSort,
+  sortOrder: SortOrder,
   currentPage: number;
   pageSize?: number;
 }
@@ -32,7 +36,7 @@ const state: State = reactive({
   sortId: null,
   sortKey: null,
   customSort: null,
-  sortOrder: 0,
+  sortOrder: SortOrder.NONE,
   currentPage: 0,
   pageSize: undefined
 })
