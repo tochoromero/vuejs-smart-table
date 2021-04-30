@@ -17,7 +17,9 @@ module.exports = {
           '/getting-started.md',
           '/the-basics.md',
           '/filtering.md',
-          '/sorting.md'
+          '/sorting.md',
+          '/selection.md',
+          '/table-state.md'
         ],
       },
     ]

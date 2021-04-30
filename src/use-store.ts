@@ -1,5 +1,5 @@
 import { reactive, toRefs, computed, watch, Ref } from 'vue-demi'
-import { CustomSort, Filters, SortKey, SelectionMode, SortOrder } from './types'
+import { CustomSort, Filters, SortKey, SelectionMode, SortOrder, TableState } from './types'
 import { calculateTotalPages, doFilter, doPaginate, doSort } from './table-utils'
 
 interface Sort {
@@ -10,19 +10,19 @@ interface Sort {
 }
 
 interface State extends Sort {
-  data: any[];
-  filters: Filters;
-  selectedRows: any[];
-  selectionMode: SelectionMode;
-  customSelection: boolean;
-  selectedClass: string;
-  hideSortIcons: boolean;
-  sortId: string | null,
-  sortKey: SortKey,
-  customSort: CustomSort,
-  sortOrder: SortOrder,
-  currentPage: number;
-  pageSize?: number;
+  data: any[]
+  filters: Filters
+  selectedRows: any[]
+  selectionMode: SelectionMode
+  customSelection: boolean
+  selectedClass: string
+  hideSortIcons: boolean
+  sortId: string | null
+  sortKey: SortKey
+  customSort: CustomSort
+  sortOrder: SortOrder
+  currentPage: number
+  pageSize?: number
 }
 
 const state: State = reactive({
@@ -150,6 +150,13 @@ export function useStore () {
     return sortedData.value
   })
 
+  const tableState = computed<TableState>(() => ({
+    rows: displayData.value,
+    rowsPrePagination: sortedData.value,
+    selectedRows: state.selectedRows
+  }))
+
+  // ============ Selection ============ //
   const selectRow = (row: any) => {
     if (state.selectionMode === 'single') {
       state.selectedRows = [row]
@@ -186,12 +193,13 @@ export function useStore () {
       return
     }
 
-    state.selectedRows = state.data
+    state.selectedRows = [...state.data]
   }
 
   const deselectAll = () => {
     state.selectedRows = []
   }
+  // ============ Selection ============ //
 
   const setSort = ({ sortKey, customSort, sortOrder, sortId }: Sort) => {
     state.sortKey = sortKey
@@ -210,7 +218,7 @@ export function useStore () {
     ...toRefs(state),
     filteredData,
     sortedData,
-    displayData,
+    tableState,
     totalItems,
     totalPages,
     selectRow,

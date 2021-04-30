@@ -1,5 +1,5 @@
 import { defineComponent, watch, toRef, PropType, h } from 'vue-demi'
-import { Filters, SelectionMode } from './types'
+import { Filters, SelectionMode, TableState } from './types'
 import { useStore } from './use-store'
 
 export default defineComponent({
@@ -37,26 +37,31 @@ export default defineComponent({
     },
     customSelection: {
       required: false,
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     hideSortIcons: {
       required: false,
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['loaded', 'displayData'],
-  setup (props, { emit, slots }) {
-    const { displayData, syncProp } = useStore()
+  emits: {
+    stateChanged: (state: TableState) => true
+  },
+  setup (props, { emit }) {
+    const {
+      tableState,
+      syncProp,
+      selectAll,
+      deselectAll,
+      selectRows,
+      selectedRows
+    } = useStore()
 
-    let initialLoad = false
-    watch(displayData, () => {
-      if (!initialLoad) {
-        initialLoad = true
-        emit('loaded')
-      }
-
-      emit('displayData', displayData.value)
-    }, { immediate: true })
+    watch(tableState, rows => {
+      emit('stateChanged', tableState.value)
+    }, { immediate: true, deep: true })
 
     syncProp('data', toRef(props, 'data'))
     syncProp('filters', toRef(props, 'filters'), true)
@@ -67,11 +72,17 @@ export default defineComponent({
     syncProp('customSelection', toRef(props, 'customSelection'))
     syncProp('hideSortIcons', toRef(props, 'hideSortIcons'))
 
-    return () => {
-      return h('table', [
-        h('thead', slots.head? slots.head() : undefined),
-        h('tbody', slots.body? slots.body({ rows: displayData.value }) : undefined)
-      ])
+    return {
+      tableState,
+      selectAll,
+      deselectAll,
+      selectRows
     }
+  },
+  render () {
+    return h('table', [
+      h('thead', this.$slots.head ? this.$slots.head() : undefined),
+      h('tbody', this.$slots.body? this.$slots.body({ rows: this.tableState.rows }) : undefined)
+    ])
   }
 })

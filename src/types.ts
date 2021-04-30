@@ -1,3 +1,9 @@
+export interface TableState {
+  rows: any[],
+  rowsPrePagination: any[],
+  selectedRows: any[]
+}
+
 export interface BasicFilter {
   value: string
   keys: string[]

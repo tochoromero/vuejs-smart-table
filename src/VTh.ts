@@ -1,5 +1,5 @@
 import { uuid } from './table-utils'
-import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, VNode, watch } from 'vue-demi'
+import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, watch } from 'vue-demi'
 import { CustomSort, SortKey, SortOrder } from './types'
 import { useStore } from './use-store'
 
@@ -23,7 +23,7 @@ export default defineComponent({
       default: null
     }
   },
-  emits: ['defaultSort'],
+  emits: ['defaultSort', 'sortChanged'],
   setup(props, { emit, slots }) {
     const { sortId, hideSortIcons, setSort } = useStore()
 
@@ -36,7 +36,7 @@ export default defineComponent({
 
     onMounted(() => {
       if (props.defaultSort) {
-        order.value = props.defaultSort === 'desc' ? -1 : 1
+        order.value = props.defaultSort === 'desc' ? SortOrder.DESC : SortOrder.ASC
         setSort({
           sortOrder: order.value,
           sortKey: props.sortKey,
@@ -45,6 +45,7 @@ export default defineComponent({
         })
         nextTick(() => {
           emit('defaultSort')
+          emit('sortChanged', { sortOrder: order.value})
         })
       }
     })
@@ -109,6 +110,8 @@ export default defineComponent({
         customSort: props.customSort,
         sortId: id
       })
+
+      emit('sortChanged', { sortOrder: order.value })
     }
 
     const children = computed(() => {

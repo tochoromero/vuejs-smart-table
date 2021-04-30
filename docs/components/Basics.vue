@@ -3,7 +3,7 @@
     <VTable :data="users">
       <template #head>
         <tr>
-          <VTh sort-key="name" default-sort="asc">Name</VTh>
+          <th>Name</th>
           <th>Age</th>
           <th>Email</th>
           <th>Address</th>

@@ -233,4 +233,8 @@ enum SortOrder {
 In practice, you don't want to repeat this over and over, 
 so you will want to create a custom component that receives the `sortOrder` and renders the right icon.
 
+## Sort Events
 
+### Sort Changed
+When the sort changes because the user clicks a header we will emit a `sortChanged` event. The event payload will
+be an object with a `sortOrder` property whose value will be `-1` for descending or `1` for ascending.
