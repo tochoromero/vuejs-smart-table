@@ -23,11 +23,11 @@ When you need it, you can enable extra functionality in a way that feels natural
 ### Installation
 To install simply run
 ```
-npm add vuejs-smart-table
+npm add vuejs-smart-table@next
 ```
 or
 ```
-yarn add vuejs-smart-table
+yarn add vuejs-smart-table@next
 ```
 
 Then in your `main.js`
