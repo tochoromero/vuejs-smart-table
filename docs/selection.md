@@ -4,7 +4,26 @@
 To enable row selection you need to use the `VTr` component. It only has one property: `row`
 
 ### Row <Badge text="object"/>
-You must provide the `row` property with the current Object for the row.
+You must provide the `row` property with the current Object for the row:
+
+```html
+<VTable :data="users">
+      <template #head>
+        <th>Name</th>
+        ...
+      </template>
+      <template #body="{ rows }">
+        <VTr
+          v-for="row in rows"
+          :key="row.guid"
+          :row="row"
+        >
+          <td>{{ row.name }}</td>
+          ...
+        </VTr>
+      </template>
+    </VTable>
+```
 
 ## Selection Options
 You can configure the Selection Mode and the Selected Class in the `VTable` component.
@@ -116,7 +135,6 @@ For instance, you may want your table to have a couple of rows selected by defau
 For those instances you can use the `selectRows` function. The function only has one parameter `rows` which is an array of rows to select.
 
 ```js
-import 
 <script>
   import users from './users.json'
 
@@ -143,7 +161,6 @@ If the `selectionMode` is `single` and you provide more than one object in the `
 ## Example
 
 <CodeGroup>
-
   <CodeGroupItem title="html" active>
 
 ```html
