@@ -1,7 +1,8 @@
 import { uuid } from './table-utils'
-import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, watch } from 'vue-demi'
+import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, watch, inject } from 'vue-demi'
 import { CustomSort, SortKey, SortOrder } from './types'
-import { useStore } from './use-store'
+import { createIcon } from './icon-utils'
+import { storeKey } from './VTable'
 
 export default defineComponent({
   name: 'VTh',
@@ -25,7 +26,7 @@ export default defineComponent({
   },
   emits: ['defaultSort', 'sortChanged'],
   setup(props, { emit, slots }) {
-    const { sortId, hideSortIcons, setSort } = useStore()
+    const store = inject(storeKey)!
 
     if (!props.sortKey && !props.customSort) {
       throw new Error('Must provide the Sort Key value or a Custom Sort function.')
@@ -37,7 +38,7 @@ export default defineComponent({
     onMounted(() => {
       if (props.defaultSort) {
         order.value = props.defaultSort === 'desc' ? SortOrder.DESC : SortOrder.ASC
-        setSort({
+        store.setSort({
           sortOrder: order.value,
           sortKey: props.sortKey,
           customSort: props.customSort,
@@ -51,33 +52,15 @@ export default defineComponent({
     })
 
     const createSortIcon = (d: string) => {
-      const svgProps = () => {
-        const props = {
-          width: 16,
-          height: 16,
-          xmlns: 'http://www.w3.org/2000/svg',
-          viewBox: '0 0 320 512'
-        }
-
-        return isVue2 ? { attrs: props } : props
-      }
-
-      const pathProps = () => {
-        const props = {
-          fill: 'currentColor',
-          d
-        }
-
-        return isVue2 ? { attrs: props } : props
-      }
-
-      return h('svg', svgProps(), [
-        h('path', pathProps())
-      ])
+      return createIcon({
+        vbWidth: 320,
+        vbHeight: 512,
+        d
+      })
     }
 
     const sortIcon = computed(() => {
-      if (hideSortIcons.value) {
+      if (store.state.hideSortIcons) {
         return
       }
 
@@ -91,8 +74,8 @@ export default defineComponent({
       }
     })
 
-    watch(sortId, () => {
-      if (sortId.value !== id && order.value !== 0) {
+    watch(() => store.state.sortId, () => {
+      if (store.state.sortId !== id && order.value !== 0) {
         order.value = 0
       }
     })
@@ -104,7 +87,7 @@ export default defineComponent({
         order.value = SortOrder.DESC
       }
 
-      setSort({
+      store.setSort({
         sortOrder: order.value,
         sortKey: props.sortKey,
         customSort: props.customSort,
@@ -116,7 +99,7 @@ export default defineComponent({
 
     const children = computed(() => {
       const children: any = []
-      if (!hideSortIcons.value) {
+      if (!store.state.hideSortIcons) {
         children.push(sortIcon.value)
       }
 

@@ -1,3 +1,5 @@
+import { Store } from './Store'
+
 export interface TableState {
   rows: any[],
   rowsPrePagination: any[],
@@ -27,5 +29,39 @@ export enum SortOrder {
   DESC = -1,
   NONE = 0,
   ASC= 1
+}
+
+export interface Sort {
+  sortId: string | null;
+  sortKey: SortKey;
+  customSort: CustomSort;
+  sortOrder: number;
+}
+
+export interface State extends Sort {
+  data: any[]
+  filters: Filters
+  selectedRows: any[]
+  selectionMode: SelectionMode
+  customSelection: boolean
+  selectedClass: string
+  hideSortIcons: boolean
+  sortId: string | null
+  sortKey: SortKey
+  customSort: CustomSort
+  sortOrder: SortOrder
+  currentPage: number
+  pageSize?: number
+}
+
+export interface VTable {
+  tableState: TableState,
+  selectAll: () => void,
+  deselectAll: () => void,
+  selectRows: (rows: any[]) => void
+  selectRow: (row: any) => void
+  deselectRows: (rows: any[]) => void
+  deselectRow: (row: any) => void
+  revealItem: (item: any | ((item: any) => boolean)) => boolean
 }
 

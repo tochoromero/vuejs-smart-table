@@ -19,6 +19,7 @@ module.exports = {
           '/filtering.md',
           '/sorting.md',
           '/selection.md',
+          '/pagination.md',
           '/table-state.md'
         ],
       },

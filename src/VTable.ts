@@ -1,6 +1,8 @@
-import { defineComponent, watch, toRef, PropType, h } from 'vue-demi'
+import { defineComponent, watch, toRef, PropType, h, provide, InjectionKey } from 'vue-demi'
 import { Filters, SelectionMode, TableState } from './types'
-import { useStore } from './use-store'
+import { Store } from './Store'
+
+export const storeKey: InjectionKey<Store> = Symbol('store-key')
 
 export default defineComponent({
   name: 'VTable',
@@ -49,34 +51,30 @@ export default defineComponent({
   emits: {
     stateChanged: (state: TableState) => true
   },
-  setup (props, { emit }) {
-    const {
-      tableState,
-      syncProp,
-      selectAll,
-      deselectAll,
-      selectRows,
-      selectedRows
-    } = useStore()
+  setup (props, ctx) {
+    // @ts-ignore
+    const store = new Store(ctx.emit)
+    provide(storeKey, store)
 
-    watch(tableState, rows => {
-      emit('stateChanged', tableState.value)
-    }, { immediate: true, deep: true })
-
-    syncProp('data', toRef(props, 'data'))
-    syncProp('filters', toRef(props, 'filters'), true)
-    syncProp('currentPage', toRef(props, 'currentPage'))
-    syncProp('pageSize', toRef(props, 'pageSize'))
-    syncProp('selectionMode', toRef(props, 'selectionMode'))
-    syncProp('selectedClass', toRef(props, 'selectedClass'))
-    syncProp('customSelection', toRef(props, 'customSelection'))
-    syncProp('hideSortIcons', toRef(props, 'hideSortIcons'))
+    store.syncProp('data', toRef(props, 'data'))
+    store.syncProp('filters', toRef(props, 'filters'), true)
+    store.syncProp('currentPage', toRef(props, 'currentPage'))
+    store.syncProp('pageSize', toRef(props, 'pageSize'))
+    store.syncProp('selectionMode', toRef(props, 'selectionMode'))
+    store.syncProp('selectedClass', toRef(props, 'selectedClass'))
+    store.syncProp('customSelection', toRef(props, 'customSelection'))
+    store.syncProp('hideSortIcons', toRef(props, 'hideSortIcons'))
 
     return {
-      tableState,
-      selectAll,
-      deselectAll,
-      selectRows
+      store: store,
+      tableState: store.tableState,
+      selectAll: () => store.selectAll(),
+      deselectAll: () => store.deselectAll(),
+      selectRows: (rows: any[]) => store.selectRows(rows),
+      selectRow: (row: any) => store.selectRow(row),
+      deselectRows: (rows: any[]) => store.deselectRows(rows),
+      deselectRow: (row: any) => store.deselectRow(row),
+      revealItem: (item: any | ((item: any) => boolean)) => store.revealItem(item)
     }
   },
   render () {

@@ -1,5 +1,5 @@
-import { computed, defineComponent, h } from 'vue-demi'
-import { useStore } from './use-store'
+import { computed, defineComponent, h, inject } from 'vue-demi'
+import { storeKey } from './VTable'
 
 export default defineComponent({
   name: 'VTr',
@@ -10,23 +10,23 @@ export default defineComponent({
     }
   },
   setup(props: any, { slots }) {
-    const { selectedRows, selectedClass, customSelection, deselectRow, selectRow } = useStore()
+    const store = inject(storeKey)!
 
-    const isSelected = computed(() => selectedRows.value.find((it: any) => it === props.row))
-    const rowClass = computed(() => isSelected.value ? selectedClass.value : '')
-    const style = computed(() => ({ ...(!customSelection.value ? { cursor: 'pointer' } : {}) }))
+    const isSelected = computed(() => store.state.selectedRows.find((it: any) => it === props.row))
+    const rowClass = computed(() => isSelected.value ? store.state.selectedClass : '')
+    const style = computed(() => ({ ...(!store.state.customSelection ? { cursor: 'pointer' } : {}) }))
 
     const handleRowSelected = (event: Event) => {
-      if (customSelection.value) {
+      if (store.state.customSelection) {
         return
       }
 
       const source = event.target as HTMLElement
       if (source && source.tagName.toLowerCase() === 'td') {
         if (isSelected.value) {
-          deselectRow(props.row)
+          store.deselectRow(props.row)
         } else {
-          selectRow(props.row)
+          store.selectRow(props.row)
         }
       }
     }
@@ -35,7 +35,10 @@ export default defineComponent({
       return h('tr', {
           class: rowClass.value,
           style: style.value,
-          onClick: handleRowSelected
+          onClick: handleRowSelected,
+          on: {
+            click: handleRowSelected
+          }
         },
         slots.default ? slots.default() : []
       )
