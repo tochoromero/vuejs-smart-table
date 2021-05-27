@@ -1,5 +1,3 @@
-import { Store } from './Store'
-
 export interface TableState {
   rows: any[],
   rowsPrePagination: any[],
@@ -52,16 +50,5 @@ export interface State extends Sort {
   sortOrder: SortOrder
   currentPage: number
   pageSize?: number
-}
-
-export interface VTable {
-  tableState: TableState,
-  selectAll: () => void,
-  deselectAll: () => void,
-  selectRows: (rows: any[]) => void
-  selectRow: (row: any) => void
-  deselectRows: (rows: any[]) => void
-  deselectRow: (row: any) => void
-  revealItem: (item: any | ((item: any) => boolean)) => boolean
 }
 

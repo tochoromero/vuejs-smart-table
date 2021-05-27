@@ -6,7 +6,7 @@
   ],
   "main": "./dist/vuejs-smart-table.umd.js",
   "module": "./dist/vuejs-smart-table.es.js",
-  "types": "./dist/types/vuejs-smart-table.d.ts",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/vuejs-smart-table.es.js",
@@ -15,9 +15,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "vueDeclaration": "vue-dts-gen --outDir dist/types \"src/*.vue\"",
-    "tsDeclaration": "tsc -d --outDir dist/types --emitDeclarationOnly src/main.ts",
+    "build": "vue-tsc --noEmit && vite build && yarn run tsDeclaration",
+    "tsDeclaration": "tsc -d --outDir dist/types --emitDeclarationOnly --target esnext --moduleResolution node src/index.ts",
     "serve": "vite preview",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
