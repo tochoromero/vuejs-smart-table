@@ -20,8 +20,8 @@ export function createIcon(props: { vbWidth: number, vbHeight: number, d: string
         ...(props.disabled ? { color: '#9CA3AF'}: {})
       }
     },
-    h('path', {
+    [h('path', {
       attrs: pathAttrs,
       ...pathAttrs
-    }))
+    })])
 }

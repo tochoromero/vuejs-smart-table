@@ -1,4 +1,4 @@
-import { defineComponent, watch, toRef, PropType, h, provide, InjectionKey } from 'vue-demi'
+import { defineComponent, watch, toRef, PropType, h, provide, InjectionKey, isVue2 } from 'vue-demi'
 import { Filters, SelectionMode, TableState } from './types'
 import { Store } from './Store'
 
@@ -74,13 +74,14 @@ export default defineComponent({
       selectRow: (row: any) => store.selectRow(row),
       deselectRows: (rows: any[]) => store.deselectRows(rows),
       deselectRow: (row: any) => store.deselectRow(row),
-      revealItem: (item: any | ((item: any) => boolean)) => store.revealItem(item)
+      revealItem: (item: any | ((item: any) => boolean)) => store.revealItem(item),
+      slots: ctx.slots
     }
   },
   render () {
     return h('table', [
-      h('thead', this.$slots.head ? this.$slots.head() : undefined),
-      h('tbody', this.$slots.body? this.$slots.body({ rows: this.tableState.rows }) : undefined)
+      h('thead', this.slots.head ? this.slots.head() : undefined),
+      h('tbody', this.slots.body? this.slots.body({ rows: this.tableState.rows }) : undefined)
     ])
   }
 })

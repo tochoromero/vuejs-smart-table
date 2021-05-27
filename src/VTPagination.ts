@@ -130,7 +130,7 @@ export default defineComponent({
       return h('li', {
           class: ['page-item', { disabled, active }]
         },
-        h('a', {
+        [h('a', {
             class: 'page-link',
             style: {
               ...(disabled ? { cursor: 'not-allowed' } : {})
@@ -144,7 +144,7 @@ export default defineComponent({
               ...(disabled ? {} : { click: onClick })
             }
           },
-          children)
+          [children])]
       )
     }
 
@@ -208,7 +208,7 @@ export default defineComponent({
       }
 
       return h('nav', { class: 'vt-pagination' }, [
-        h('ul', { class: 'pagination' }, listItems)
+        h('ul', { class: 'pagination' }, [listItems])
       ])
     }
   }
