@@ -1,13 +1,13 @@
 <template replaceable part="pagination">
   <nav v-show="!(hideSinglePage && totalPages === 1)" class="smart-pagination">
     <ul class="pagination">
-      <li :class="{'disabled': currentPage === 1}" v-if="boundaryLinks" class="page-item">
+      <li :class="{'disabled': currentPage === 1}" v-show="boundaryLinks" class="page-item">
         <a href="javascript:void(0)" aria-label="Previous" @click="firstPage" class="page-link">
           <span aria-hidden="true" v-html="firstText"></span>
         </a>
       </li>
 
-      <li :class="{'disabled': currentPage === 1}" v-if="directionLinks" class="page-item">
+      <li :class="{'disabled': currentPage === 1}" v-show="directionLinks" class="page-item">
         <a href="javascript:void(0)" aria-label="Previous" @click="previousPage()" class="page-link">
           <slot name="previousIcon" :disabled="currentPage === 1">
             <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -27,7 +27,7 @@
         <a href="javascript:void(0)" @click="selectPage(page.value)" class="page-link">{{page.title}}</a>
       </li>
 
-      <li :class="{'disabled': currentPage === totalPages}" v-if="directionLinks"
+      <li :class="{'disabled': currentPage === totalPages}" v-show="directionLinks"
           class="page-item">
         <a href="javascript:void(0)" aria-label="Next" @click="nextPage()" class="page-link">
           <slot name="nextIcon" :disabled="currentPage === totalPages">
@@ -39,7 +39,7 @@
         </a>
       </li>
 
-      <li :class="{'disabled': currentPage === totalPages}" v-if="boundaryLinks"
+      <li :class="{'disabled': currentPage === totalPages}" v-show="boundaryLinks"
           class="page-item">
         <a href="javascript:void(0)" aria-label="Previous" @click="lastPage()" class="page-link">
           <span aria-hidden="true" v-html="lastText"></span>
