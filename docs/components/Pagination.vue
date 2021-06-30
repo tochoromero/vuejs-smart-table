@@ -25,6 +25,7 @@
     <VTPagination
         v-model:currentPage="currentPage"
         :total-pages="totalPages"
+        :boundary-links="true"
     />
   </div>
 </template>

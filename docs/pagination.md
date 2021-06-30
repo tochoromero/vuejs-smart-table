@@ -81,6 +81,7 @@ that way whenever either of them changes it the other will be notified.
     <VTPagination
       v-model:currentPage="currentPage"
       :total-pages="totalPages"
+      :boundary-links="true"
     />
   </div>
 </template>
@@ -117,6 +118,7 @@ that way whenever either of them changes it the other will be notified.
     <VTPagination
       currentPage.sync="currentPage"
       :total-pages="totalPages"
+      :boundary-links="true"
     />
   </div>
 </template>
@@ -152,12 +154,10 @@ and feel of the pagination controls:
 | hideSinglePage      | boolean       | Hide pagination controls when there is only a single page. | `true`
 | maxPageLinks   | number        | Maximum number of page links visibles, if omitted we will show all page links. | `undefined`
 | boundaryLinks | boolean | Show links to navigate to the first and last page | `false`
-| firstText | string | Text for the first page link | `'First'`
-| lastText | string | Text for the last page link | `'Last'`
 | directionLinks | boolean | Show direction links to navigate back and forth between pages | `true`
 
 
-## CSS Customization
+## Styling
 The HTML structure for the Smart Pagination component is as follows:
 ```html
 <nav class="vt-pagination">
@@ -176,3 +176,37 @@ The HTML structure for the Smart Pagination component is as follows:
 </nav>
 ```
 This structure is compatible with Bootstrap's Pagination. But you can easily customize it with your own Styles.
+
+## Custom Icons
+The `<VTPagination>` component provides sensible icons for the previous and next buttons, 
+you can also customize the text for the last and first buttons. 
+But you also have the ability to provide custom icons for any of those four buttons using their corresponding scoped slot:
+
+- `firstPage`
+- `lastPage`
+- `next`
+- `previous`
+
+```html
+<VTPagination
+      currentPage.sync="currentPage"
+      :total-pages="totalPages"
+>
+  <template #firstPage>
+    <i class="fas fa-arrow-left"/>
+  </template>
+  
+  <template #lastPage>
+    <i class="fas fa-arrow-right"/>
+  </template>
+  
+  <template #next>
+    <i class="fas fa-chevron-right"/>
+  </template>
+  
+  <template #previous>
+    <i class="fas fa-chevron-left"/>
+  </template>
+</VTPagination>
+```
+Each of these slots have a `disabled` scoped property you can use to change the icon appearance or even show a different icon when the button is disabled.

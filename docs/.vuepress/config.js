@@ -7,6 +7,14 @@ module.exports = {
       {
         text: 'Documentation',
         link: '/getting-started.md'
+      },
+      {
+        text: 'Migration Guide',
+        link: '/migration-guide.md'
+      },
+      {
+        text: 'Github',
+        link: 'https://github.com/tochoromero/vuejs-smart-table/tree/next'
       }
     ],
     sidebar: [
@@ -20,7 +28,8 @@ module.exports = {
           '/sorting.md',
           '/selection.md',
           '/pagination.md',
-          '/table-state.md'
+          '/table-state.md',
+          '/migration-guide.md'
         ],
       },
     ]

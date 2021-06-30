@@ -91,7 +91,7 @@ or `0` if they are the same.
 
 <CodeGroup>
 
-  <CodeGroupItem title="html" active>
+  <CodeGroupItem title="html">
 
 ```html
 <template #head>
@@ -102,13 +102,19 @@ or `0` if they are the same.
 
   <CodeGroupItem title="js" active>
 
-```js
+```js active
 methods: {
   dateSort(a, b, sortOrder) {
     let date1 = new Date(a.registered).getTime();
     let date2 = new Date(b.registered).getTime();
-
-    return date1 - date2 * sortOrder;
+    
+    if (sortOrder === 1) {
+      return date1 - date2
+    } else if (sortOrder === -1) {
+      return date2 - date1
+    } else {
+      return 0
+    }
   }
 }
 ```

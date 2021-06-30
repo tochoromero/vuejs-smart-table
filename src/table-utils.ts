@@ -30,7 +30,7 @@ export function doSort(
 
   return local.sort((a, b) => {
     if (typeof customSort === 'function') {
-      return customSort(a, b, sortOrder) // TODO breaking change
+      return customSort(a, b, sortOrder)
     }
 
     let val1
