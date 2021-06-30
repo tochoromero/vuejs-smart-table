@@ -7,7 +7,18 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div id="app">
+    </div>
+  <script type="module">
+    import { createApp } from 'vue'
+    import App from './App.vue'
+    // @ts-ignore
+    import SmartTable from './src/main'
+
+
+    const app = createApp(App)
+    app.use(SmartTable)
+    app.mount('#app')
+  </script>
   </body>
 </html>
