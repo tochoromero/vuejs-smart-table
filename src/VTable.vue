@@ -2,6 +2,7 @@
   <table>
     <slot name="head"/>
     <slot name="body" :displayData="displayData"/>
+    <slot name="foot"/>
   </table>
 </template>
 
