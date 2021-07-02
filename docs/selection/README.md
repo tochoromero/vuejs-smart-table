@@ -15,7 +15,7 @@ You can use the `selectionMode` property in the `v-table` component to set it to
 can be selected.
 
 ### Selected Class <Badge text="Property"/> <Badge text="selectedClass: String"/> <Badge text="default: vt-selected"/>
-When a row is selected a class is added to the `tr` element, by default it is `vt-selected` byt you can change it to
+When a row is selected a class is added to the `tr` element, by default it is `vt-selected` but you can change it to
 something else with the `selectedClass` property in the `v-table` component.
 
 ## Selection Changed <Badge text="Event"/> <Badge text="selectionChanged: Array"/>
