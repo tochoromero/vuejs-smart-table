@@ -46,6 +46,16 @@ export default defineComponent({
       required: false,
       type: Boolean,
       default: false
+    },
+    sortIconPosition: {
+      required: false,
+      type: String,
+      default: 'after'
+    },
+    sortHeaderClass: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
   emits: {
@@ -64,6 +74,8 @@ export default defineComponent({
     store.syncProp('selectedClass', toRef(props, 'selectedClass'))
     store.syncProp('customSelection', toRef(props, 'customSelection'))
     store.syncProp('hideSortIcons', toRef(props, 'hideSortIcons'))
+    store.syncProp('sortIconPosition', toRef(props, 'sortIconPosition'))
+    store.syncProp('sortHeaderClass', toRef(props, 'sortHeaderClass'))
 
     return {
       store: store,
@@ -79,7 +91,9 @@ export default defineComponent({
     }
   },
   render () {
-    return h('table', [
+    return h('table', {
+      class: 'v-table'
+    }, [
       h('thead', this.slots.head ? this.slots.head() : undefined),
       h('tbody', this.slots.body? this.slots.body({ rows: this.tableState.rows }) : undefined)
     ])

@@ -194,10 +194,71 @@ export default {
 
 <Sorting />
 
+## Additional Settings
+There some additional settings available for you at the `VTable` component, this will affect all the `VTh` inside that table.
+
+### Sort Icon Position <Badge text="'before' | 'after'"/> <Badge text="Global"/>
+Determines the position the default sort icon will be rendered. By default it is rendered after the column header text,
+but it can be changed to be rendered before the column header text.
+
+```html
+<template #head>
+  <VTable 
+    :data="users"
+    sortIconPosition="before"
+  >
+    <template #head>
+      <VTh :sortKey="nameLength">
+        Name
+      </VTh>
+      ...
+  <VTable />    
+</template>
+```
+
+### Sort Header Class <Badge text="string"/>
+The `VTh` component gets rendered as a normal `th` element and it includes the `v-th` css class, 
+this is enough to target it and style it.
+
+But, with the popularity of tools like Tailwind CSS you may want to add utility classes to your headers, 
+for those instances you can use the `sortHeaderClass` property on `VTable` to add additional classes to the `VTh` output.
+
+```html
+<VTable
+    :data="users"
+    :sortHeaderClass="flex items-center justify-between w-full"
+>
+  <template #head>
+    <VTh :sortKey="nameLength">
+      Name
+    </VTh>
+    ...
+    <VTable />
+</VTable>
+```
+
+The output of this table will be:
+
+```html
+<table class="v-table">
+ <thead>
+  <th class="v-th">
+    <div class="flex items-center justify-between w-full">
+      <span>Name</span>
+      <svg>...</svg>
+    </div>
+  </th>
+  ...
+ </thead>
+</table>
+```
+
+
 ## Custom Sort Icons
 By default, we include three SVG icons to indicate the sorting state of a column. 
 This should be enough for basic examples, but you have the ability to provide your own sort icons.
 
+### Hide Sort Icons <Badge text="boolean"/> <Badge text="Global"/>
 The first thing you need to do is to disable the default sort icons with the `hideSortIcons` property on the `VTable` component:
 
 ```html

@@ -29,6 +29,7 @@ module.exports = {
           '/selection.md',
           '/pagination.md',
           '/table-state.md',
+          '/global-settings.md',
           '/migration-guide.md'
         ],
       },

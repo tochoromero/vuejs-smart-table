@@ -44,11 +44,19 @@ export interface State extends Sort {
   customSelection: boolean
   selectedClass: string
   hideSortIcons: boolean
+  sortIconPosition: 'before' | 'after'
   sortId: string | null
   sortKey: SortKey
   customSort: CustomSort
   sortOrder: SortOrder
   currentPage: number
   pageSize?: number
+  sortHeaderClass: string
+}
+
+export interface PluginOptions {
+  hideSortIcons?: boolean
+  sortIconPosition?: 'before' | 'after',
+  sortHeaderClass?: string
 }
 

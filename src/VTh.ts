@@ -1,7 +1,7 @@
 import { uuid } from './table-utils'
 import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, watch, inject } from 'vue-demi'
 import { CustomSort, SortKey, SortOrder } from './types'
-import { createIcon } from './icon-utils'
+import { createSortIcon } from './icon-utils'
 import { storeKey } from './VTable'
 
 export default defineComponent({
@@ -51,27 +51,12 @@ export default defineComponent({
       }
     })
 
-    const createSortIcon = (d: string) => {
-      return createIcon({
-        vbWidth: 320,
-        vbHeight: 512,
-        d
-      })
-    }
-
     const sortIcon = computed(() => {
       if (store.state.hideSortIcons) {
         return
       }
 
-      switch (order.value) {
-        case SortOrder.DESC:
-          return createSortIcon('M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z')
-        case SortOrder.ASC:
-          return createSortIcon('M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z')
-        default:
-          return createSortIcon('M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z')
-      }
+      return createSortIcon(order.value)
     })
 
     watch(() => store.state.sortId, () => {
@@ -99,12 +84,18 @@ export default defineComponent({
 
     const children = computed(() => {
       const children: any = []
-      if (!store.state.hideSortIcons) {
+
+      if (store.state.sortIconPosition === 'before' && !store.state.hideSortIcons) {
         children.push(sortIcon.value)
       }
 
+
       if (slots.default) {
-        children.push(slots.default({ sortOrder: order.value }))
+        children.push(h('span', [slots.default({ sortOrder: order.value })]))
+      }
+
+      if (store.state.sortIconPosition === 'after' && !store.state.hideSortIcons) {
+        children.push(sortIcon.value)
       }
 
       return children
@@ -112,6 +103,7 @@ export default defineComponent({
 
     return () => {
       return h('th', {
+        class: 'v-th',
         ...(isVue2 ? {
           on: {
             click: sort
@@ -120,7 +112,7 @@ export default defineComponent({
           onClick: sort
         })
       }, [
-        h('div', children.value)
+        h('div', { class: store.state.sortHeaderClass }, children.value)
       ])
     }
   }

@@ -16,7 +16,9 @@ export class Store {
     customSort: null,
     sortOrder: SortOrder.NONE,
     currentPage: 0,
-    pageSize: undefined
+    pageSize: undefined,
+    sortIconPosition: 'after',
+    sortHeaderClass: ''
   })
 
   private readonly emit: (event: string, payload: any) => void
