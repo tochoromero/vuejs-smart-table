@@ -94,8 +94,18 @@ export default defineComponent({
     return h('table', {
       class: 'v-table'
     }, [
-      h('thead', this.slots.head ? this.slots.head() : undefined),
-      h('tbody', this.slots.body? this.slots.body({ rows: this.tableState.rows }) : undefined)
+      h('thead', this.slots.head ? this.slots.head({
+        rows: this.tableState.rows,
+        selectedRows: this.tableState.selectedRows,
+        selectAll: this.selectAll,
+        deselectAll: this.deselectAll,      
+      }) : undefined),
+      h('tbody', this.slots.body? this.slots.body({
+        rows: this.tableState.rows,
+        selectedRows: this.tableState.selectedRows,
+        selectRow: this.selectRow,
+        deselectRow: this.deselectRow,
+      }) : undefined)
     ])
   }
 })
