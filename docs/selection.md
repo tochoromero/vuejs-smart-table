@@ -78,17 +78,17 @@ You can learn more about the `stateChanged` event in the [Table State](/table-st
 
 ## Selection API
 We also provide an API to perform some selection actions such as selecting all the rows.
-These are functions that are exposed in the `VTh` component. 
-The first thing you need to do is to get a `ref` to the `VTh` component:
+These are functions that are exposed in the `VTable` component. 
+The first thing you need to do is to get a `ref` to the `VTable` component:
 
 ```html
 <template>
-  <VTh
+  <VTable
     :data="users",
     :ref="usersTable"
   >
     ...
-  </VTh>
+  </VTable>
 </template>
 ```
 
