@@ -1,5 +1,5 @@
 import { uuid } from './table-utils'
-import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, watch, inject } from 'vue-demi'
+import { computed, defineComponent, h, isVue2, nextTick, onMounted, PropType, ref, watch, inject, getCurrentInstance } from 'vue-demi'
 import { CustomSort, SortKey, SortOrder } from './types'
 import { createSortIcon } from './icon-utils'
 import { storeKey } from './VTable'
@@ -30,6 +30,11 @@ export default defineComponent({
 
     if (!props.sortKey && !props.customSort) {
       throw new Error('Must provide the Sort Key value or a Custom Sort function.')
+    }
+    
+    const internalInstance = getCurrentInstance()
+    if (internalInstance.parent.options.name !== 'VTable') {
+      throw new Error('VTh must be used in the header slot of VTable.')
     }
 
     const id = uuid()
@@ -89,9 +94,14 @@ export default defineComponent({
         children.push(sortIcon.value)
       }
 
-
       if (slots.default) {
-        children.push(h('span', [slots.default({ sortOrder: order.value })]))
+        children.push(h('span', [slots.default({
+          sortOrder: order.value,
+          rows: internalInstance.parent.tableState.rows,
+          selectedRows: internalInstance.parent.tableState.selectedRows,
+          selectAll: internalInstance.parent.selectAll,
+          deselectAll: internalInstance.parent.deselectAll,
+        })]))
       }
 
       if (store.state.sortIconPosition === 'after' && !store.state.hideSortIcons) {
