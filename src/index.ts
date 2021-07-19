@@ -1,8 +1,10 @@
 import main from './main'
-export default main
-export * from './VTable'
-export * from './VTh'
-export * from './VTr'
-export * from './VTPagination'
-export * from './types'
+import VTable from './VTable'
+import VTh from './VTh'
+import VTr from './VTr'
+import VTPagination from './VTPagination'
 
+export * from './types'
+export { VTable, VTh, VTr, VTPagination }
+
+export default main
