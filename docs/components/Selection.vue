@@ -33,7 +33,7 @@
     <strong>Selected:</strong>
     <div v-if="selectedRows.length === 0">No rows selected</div>
     <ul>
-      <li v-for="selected in selectedRows">
+      <li v-for="selected in selectedRows" :key="selected">
         {{ selected.name }}
       </li>
     </ul>
