@@ -41,7 +41,7 @@ export interface State extends Sort {
   filters: Filters
   selectedRows: any[]
   selectionMode: SelectionMode
-  customSelection: boolean
+  selectOnClick: boolean
   selectedClass: string
   hideSortIcons: boolean
   sortIconPosition: 'before' | 'after'
@@ -57,6 +57,7 @@ export interface State extends Sort {
 export interface PluginOptions {
   hideSortIcons?: boolean
   sortIconPosition?: 'before' | 'after',
-  sortHeaderClass?: string
+  sortHeaderClass?: string,
+  selectOnClick?: boolean
 }
 

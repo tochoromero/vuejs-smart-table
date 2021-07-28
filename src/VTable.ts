@@ -1,4 +1,4 @@
-import { defineComponent, watch, toRef, PropType, h, provide, InjectionKey, isVue2 } from 'vue-demi'
+import { defineComponent, watch, toRef, PropType, h, provide, InjectionKey, isVue2, computed } from 'vue-demi'
 import { Filters, SelectionMode, TableState } from './types'
 import { Store } from './Store'
 
@@ -37,10 +37,10 @@ export default defineComponent({
       type: String,
       default: 'vt-selected'
     },
-    customSelection: {
+    selectOnClick: {
       required: false,
       type: Boolean,
-      default: false
+      default: true
     },
     hideSortIcons: {
       required: false,
@@ -59,7 +59,9 @@ export default defineComponent({
     }
   },
   emits: {
-    stateChanged: (state: TableState) => true
+    stateChanged: (state: TableState) => true,
+    totalPagesChanged: (pages: number) => true,
+    totalItemsChanged: (pages: number) => true
   },
   setup (props, ctx) {
     // @ts-ignore
@@ -72,14 +74,19 @@ export default defineComponent({
     store.syncProp('pageSize', toRef(props, 'pageSize'))
     store.syncProp('selectionMode', toRef(props, 'selectionMode'))
     store.syncProp('selectedClass', toRef(props, 'selectedClass'))
-    store.syncProp('customSelection', toRef(props, 'customSelection'))
+    store.syncProp('selectOnClick', toRef(props, 'selectOnClick'))
     store.syncProp('hideSortIcons', toRef(props, 'hideSortIcons'))
     store.syncProp('sortIconPosition', toRef(props, 'sortIconPosition'))
     store.syncProp('sortHeaderClass', toRef(props, 'sortHeaderClass'))
 
+    const allRowsSelected = computed(() => store.state.selectedRows.length === store.state.data.length)
+    const toggleAllRows = () => allRowsSelected.value ? store.deselectAll() : store.selectAll()
+
     return {
       store: store,
       tableState: store.tableState,
+      allRowsSelected,
+      toggleAllRows,
       selectAll: () => store.selectAll(),
       deselectAll: () => store.deselectAll(),
       selectRows: (rows: any[]) => store.selectRows(rows),
@@ -97,8 +104,10 @@ export default defineComponent({
       h('thead', this.slots.head ? this.slots.head({
         rows: this.tableState.rows,
         selectedRows: this.tableState.selectedRows,
+        toggleAllRows: this.toggleAllRows,
         selectAll: this.selectAll,
-        deselectAll: this.deselectAll,      
+        deselectAll: this.deselectAll,
+        allRowsSelected: this.allRowsSelected
       }) : undefined),
       h('tbody', this.slots.body? this.slots.body({
         rows: this.tableState.rows,

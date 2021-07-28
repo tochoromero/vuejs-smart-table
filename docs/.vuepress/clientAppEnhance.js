@@ -3,6 +3,7 @@ import BasicFiltering from '../components/BasicFiltering.vue'
 import CustomFiltering from '../components/CustomFiltering.vue'
 import Sorting from '../components/Sorting.vue'
 import Selection from '../components/Selection.vue'
+import AdvancedSelection from '../components/AdvancedSelection.vue'
 import Pagination from '../components/Pagination.vue'
 import VTable from '../../src/VTable'
 import VTh from '../../src/VTh'
@@ -21,5 +22,6 @@ export default defineClientAppEnhance(({ app, router, siteData }) => {
   app.component('CustomFiltering', CustomFiltering)
   app.component('Sorting', Sorting)
   app.component('Selection', Selection)
+  app.component('AdvancedSelection', AdvancedSelection)
   app.component('Pagination', Pagination)
 })

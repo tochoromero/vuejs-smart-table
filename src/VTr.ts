@@ -14,13 +14,9 @@ export default defineComponent({
 
     const isSelected = computed(() => store.state.selectedRows.find((it: any) => it === props.row))
     const rowClass = computed(() => isSelected.value ? store.state.selectedClass : '')
-    const style = computed(() => ({ ...(!store.state.customSelection ? { cursor: 'pointer' } : {}) }))
+    const style = computed(() => ({ ...(store.state.selectOnClick ? { cursor: 'pointer' } : {}) }))
 
     const handleRowSelected = (event: Event) => {
-      if (store.state.customSelection) {
-        return
-      }
-
       const source = event.target as HTMLElement
       if (source && source.tagName.toLowerCase() === 'td') {
         if (isSelected.value) {
@@ -35,12 +31,15 @@ export default defineComponent({
       return h('tr', {
           class: rowClass.value,
           style: style.value,
-          onClick: handleRowSelected,
+          ...(store.state.selectOnClick ? {onClick: handleRowSelected} : {}),
           on: {
-            click: handleRowSelected
+            ...(store.state.selectOnClick ? {click: handleRowSelected} : {}),
           }
         },
-        slots.default ? slots.default() : []
+        slots.default ? slots.default({
+          isSelected: isSelected.value,
+          toggle: () => isSelected.value ? store.deselectRow(props.row) : store.selectRow(props.row)
+        }) : []
       )
     }
   }

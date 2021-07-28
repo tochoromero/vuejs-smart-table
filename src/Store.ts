@@ -8,7 +8,7 @@ export class Store {
     filters: {},
     selectedRows: [],
     selectionMode: 'single',
-    customSelection: false,
+    selectOnClick: true,
     selectedClass: '',
     hideSortIcons: false,
     sortId: null,

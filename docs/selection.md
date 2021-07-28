@@ -76,6 +76,176 @@ You can listen to the event and store the selected rows locally for your use:
 
 You can learn more about the `stateChanged` event in the [Table State](/table-state.md) section.
 
+## Advanced Selection
+Through scoped slots and one setting, you can have fine control over how the selection works:
+
+### Select On Click
+By default a `VTr` row will be selected when the user clicks on it. However, if you want to have more control over it,
+for instance to show a checkbox, you can set `selectOnClick` to `false` in the `VTable` component, this will make it so
+clicking a `VTr` will not select the row.
+
+```html
+<template>
+  <VTable
+    :data="users"
+    :selectOnClick="false"
+  >
+    ...
+  </VTable>
+</template>
+```
+
+### Head Scoped Slot
+The `head` scoped slot in the `VTable` component provides the following properties:
+
+| Property      | Description | Type Definition
+| ----------- | ----------- | ----------- |
+| selectAll   | Function to select all the rows | `() => void`
+| deselectAll | Function to deselect all the rows | `() => void`
+| toggleAllRows | Function to toggle all the rows selection. If all rows are selected it deselects them all, otherwise it will select them all. | `() => void` 
+| selectedRows | An array with all the selected rows | `any[]`
+| allRowsSelected | Boolean indicating whether or not all rows are selected | `boolean`
+
+```html
+<template>
+  <VTable
+    :data="users"
+  >
+    <template #head="{ allRowsSelected, selectAll, deselectAll, toggleAllRows, selectedRows }">
+      ...
+    </template>
+  </VTable>
+</template>
+```
+
+### Body Scoped Slot
+The `body` scoped slot in the `<VTable>` provides the following properties:
+
+| Property      | Description | Type Definition
+| ----------- | ----------- | ----------- |
+| selectRow   | Function to select one row. The `row` parameter should be `===` to one row in the table. | `(row: any) => void`
+| deselectRow   | Function to deselect one row. The `row` parameter should be `===` to one row in the table. | `(row: any) => void`
+| selectedRows | An array with all the selected rows | `any[]`
+
+```html
+<template>
+  <VTable
+    :data="users"
+  >
+    <template #body="{ selectRow, deselectRow, selectedRows }">
+      ...
+    </template>
+  </VTable>
+</template>
+```
+
+### VTr Default Slot
+The `VTr` component on its default slot provides the following properties:
+
+| Property      | Description | Type Definition
+| ----------- | ----------- | ----------- |
+| isSelected   | Boolean indicating whether or not the row is selected | `boolean`
+| toggle   | Function to toggle the selection state of the `VTr` | `() => void`
+
+```html
+<template>
+  <VTable
+    :data="users"
+  >
+    <template #body="{ rows }">
+      <VTr 
+        v-for="row in rows" 
+        :key="row.id"
+        v-slot="{ isSelected, toggle }"
+      >
+        ...
+      </VTr>
+    </template>
+  </VTable>
+</template>
+```
+### Example
+
+<CodeGroup>
+  <CodeGroupItem title="html" active>
+
+ ```html
+ <template>
+  <div>
+    <VTable
+      ref="usersTable"
+      :data="users"
+      selectionMode="multiple"
+      :selectOnClick="false"
+      @stateChanged="selectedRows = $event.selectedRows"
+    >
+      <template #head="{ allRowsSelected, toggleAllRows }">
+        <th>
+          <input
+            type="checkbox"
+            :checked="allRowsSelected"
+            @change="toggleAllRows"
+          />
+        </th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>State</th>
+        <th>Registered at</th>
+      </template>
+      <template #body="{ rows }">
+        <VTr
+          v-for="row in rows"
+          :key="row.guid"
+          :row="row"
+          v-slot="{ isSelected, toggle}"
+        >
+          <td>
+            <input
+              type="checkbox"
+              :checked="isSelected"
+              @change="toggle"
+            />
+          </td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.age }}</td>
+          <td>{{ row.address.state }}</td>
+          <td>{{ row.registered }}</td>
+        </VTr>
+      </template>
+    </VTable>
+
+    <strong>Selected:</strong>
+    <div v-if="selectedRows.length === 0">No rows selected</div>
+    <ul>
+      <li v-for="selected in selectedRows">
+        {{ selected.name }}
+      </li>
+    </ul>
+  </div>
+</template>
+```
+</CodeGroupItem>
+
+  <CodeGroupItem title="js">
+
+ ```js
+<script>
+    import users from './users.json'
+
+    export default {
+        name: 'Selection',
+        data: () => ({
+          users: users,
+          selectedRows: []
+        })
+    }
+</script> 
+```
+</CodeGroupItem>
+</CodeGroup>
+
+<AdvancedSelection />
+
 ## Selection API
 We also provide an API to perform some selection actions such as selecting all the rows.
 These are functions that are exposed in the `VTable` component. 
