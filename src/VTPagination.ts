@@ -135,7 +135,7 @@ export default defineComponent({
             style: {
               ...(disabled ? { cursor: 'not-allowed' } : {})
             },
-            attributes: {
+            attrs: {
               href: 'javascript:void(0)'
             },
             href: 'javascript:void(0)',
