@@ -56,8 +56,16 @@ export default defineComponent({
       const totalTiers = Math.ceil(props.totalPages / props.maxPageLinks)
       const activeTier = Math.ceil((props.currentPage || 1) / props.maxPageLinks)
 
-      const start = ((activeTier - 1) * props.maxPageLinks) + 1
-      const end = start + props.maxPageLinks
+      let start = ((activeTier - 1) * props.maxPageLinks) + 1
+      const end = Math.min(start + props.maxPageLinks - 1, props.totalPages)
+
+      const totalEntries = end - start + 1
+      const missingAmount = props.maxPageLinks - totalEntries
+
+      const isLastTier = activeTier === totalTiers && activeTier > 1
+      if (isLastTier && missingAmount > 0) {
+        start = start - missingAmount
+      }
 
       if (activeTier > 1) {
         displayPages.push({
@@ -66,7 +74,7 @@ export default defineComponent({
         })
       }
 
-      for (let i = start; i < end; i++) {
+      for (let i = start; i <= end; i++) {
         if (i > props.totalPages) {
           break
         }
@@ -80,7 +88,7 @@ export default defineComponent({
       if (activeTier < totalTiers) {
         displayPages.push({
           title: '...',
-          value: end
+          value: end + 1
         })
       }
 
