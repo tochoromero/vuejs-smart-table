@@ -114,7 +114,15 @@ export default defineComponent({
         selectedRows: this.tableState.selectedRows,
         selectRow: this.selectRow,
         deselectRow: this.deselectRow,
-      }) : undefined)
+      }) : undefined),
+      h('tfoot', this.slots.foot ? this.slots.foot({
+        rows: this.tableState.rows,
+        selectedRows: this.tableState.selectedRows,
+        toggleAllRows: this.toggleAllRows,
+        selectAll: this.selectAll,
+        deselectAll: this.deselectAll,
+        allRowsSelected: this.allRowsSelected
+      }) : undefined),
     ])
   }
 })
