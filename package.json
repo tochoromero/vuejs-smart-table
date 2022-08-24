@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && yarn run tsDeclaration",
+    "build": "vite build",
     "tsDeclaration": "tsc -d --outDir dist/types --emitDeclarationOnly --target esnext --moduleResolution node src/index.ts",
     "serve": "vite preview",
     "docs:dev": "vuepress dev docs",
