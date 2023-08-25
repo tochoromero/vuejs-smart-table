@@ -24,13 +24,13 @@ export function isNumeric(toCheck: any): boolean {
 export function doSort(
   toSort: any[],
   sortKey: SortKey,
-  customSort: ((a: any, b: any, sortOrder: number) => number) | null,
+  customSort: ((a: any, b: any, sortOrder: number, sortKey: SortKey) => number) | null,
   sortOrder: number) {
   const local = [...toSort]
 
   return local.sort((a, b) => {
     if (typeof customSort === 'function') {
-      return customSort(a, b, sortOrder)
+      return customSort(a, b, sortOrder, sortKey)
     }
 
     let val1
