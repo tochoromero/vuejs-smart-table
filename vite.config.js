@@ -4,6 +4,7 @@ const vue = require('@vitejs/plugin-vue')
 module.exports = {
   plugins: [vue()],
   build: {
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'src/main.ts'),
       name: 'vuejs-smart-table'
